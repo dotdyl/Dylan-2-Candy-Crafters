@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 // Pages
 import Home from './pages/Home';
 import BSGPeople from './pages/BSGPeople';
+import Candies from './pages/Candies';
 
 // Components
 import Navigation from './components/Navigation';
@@ -20,6 +21,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/bsg-people" element={<BSGPeople backendURL={backendURL} />} />
+                <Route path="/candies" element={<Candies backendURL={backendURL} />} />
             </Routes>
         </>
     );
