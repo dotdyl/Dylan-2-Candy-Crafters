@@ -11,7 +11,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "development": "nodemon server.js",
+    "dev": "nodemon server.js",
     "production": "npx forever start server.js",
     "stop_production": "npx forever stop server.js"
   },
