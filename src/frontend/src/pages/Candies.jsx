@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRow from '../components/TableRow';
-import CreateCandyForm from '../components/CRUD_Candies/CreateCandy';
+import CreateCandyForm from '../components/CRUD_Candies/FormCreateCandy';
+import UpdateCandyForm from '../components/CRUD_Candies/FormUpdateCandy';
 
 
 
@@ -57,6 +58,7 @@ function Candies({ backendURL }) {
             </table>
 
             <CreateCandyForm></CreateCandyForm>
+            <UpdateCandyForm candies={candies}></UpdateCandyForm>
         </>
     )
 } export default Candies;
