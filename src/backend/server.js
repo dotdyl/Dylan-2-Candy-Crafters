@@ -83,8 +83,12 @@ app.get('/orders', async (req, res) => {
     try {
         //TODO: implement query req to db and return as above to frontend
         const query1 = 'SELECT * FROM orders;';
+        const query2 = 'SELECT * FROM vendors;';
+        const query3 = 'SELECT * FROM candies;';
         const [orders] = await db.query(query1);
-        res.status(200).json({ orders }); //send results to frontend
+        const [vendors] = await db.query(query2);
+        const [candies] = await db.query(query3);
+        res.status(200).json({ orders, candies, vendors }); //send results to frontend
     }
     catch (error) {
         console.error("Error executing queries:", error);

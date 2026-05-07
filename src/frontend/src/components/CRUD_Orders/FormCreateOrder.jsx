@@ -1,74 +1,88 @@
-const CreateOrderForm = ({ backendURL, refreshPeople }) => {
+import { useState, useEffect } from "react";
+import { createRoot } from "react-dom/client"
+import CreateOrderDetailForm from "./FormCreateOrderDetail";
+
+const CreateOrderForm = ({ vendors, candies, backendURL, refreshPeople }) => {
     // Placeholder values for the read-only fields
     // In a real app, these would be variables or state like {calculatedSubtotal}
     const placeholderValue = 0;
     const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
 
+    const [nOVendor, setnOVendor] = useState()
+    const [details, setDetails] = useState([0.0])
+    const [subTotal, setSubTotal] = useState(0.0)
+    const [shippingCost, setShippingCost] = useState(0.0)
+    const [taxAmt, setTaxAmt] = useState(0.0)
+    const [totalDue, setTotalDue] = useState(0.0)
+
+    const addOrder = async () => {
+
+        const response = await fetch(backendURL + '/bsg-people', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: {/*Need to structure a json object that will get sent here*/}
+        })
+
+    }
+
+    const addMore = () => {
+
+        setDetails(d => ([...d, 0]))
+    }
+
+    useEffect(() => {
+
+        let sum = 0.0
+        for (const lt of details) {
+            if (lt >= 0) sum += lt
+        }
+
+        setSubTotal(sum)
+
+    }, [details])
+
+    useEffect(() => {
+
+        setTotalDue(subTotal + shippingCost + taxAmt)
+
+    }, [subTotal, shippingCost, taxAmt])
+
     return (
         <>
             <h2>Create an Order</h2>
 
-            <form className="cuForm">
-                <label htmlFor="createVendorID">Vendor ID: </label>
-                <input
-                    type="text"
-                    name="createVendorID"
-                    id="createVendorID"
-                />
-
-                <label htmlFor="assignCandyID">Assign Candy: </label>
-                <select name="assignCandyID" id="assignCandyID">
-                    <option value="">-- Please choose a candy --</option>
-
-                    {/*todo: map candies after firing SELECT *...
-
-                        candies.map(candy => (
-                            <option key={candy.id} value={candy.id}>{candy.name}</option>
-                        ))
-                        */}
-
-                    {/*hardcoded placeholders*/}
-                    <option value="1">Gummy Bears</option>
-                    <option value="2">Chocolate Bars</option>
-                    <option value="3">Sour Worms</option>
+            <form className="cuForm" onSubmit={e => {e.preventDefault(); console.log(e)}}>
+                <label htmlFor="assingVendorID">Vendor: </label>
+                <select name="assingVendorID" id="assingVendorID" required onChange={e => {setnOVendor(e.target.value)}}>
+                    <option disabled selected hidden value={null}>-- Please choose a vendor --</option>
+                    {vendors.map((vendor) => (
+                        <option key={vendor.vendorID} value={vendor.vendorID}>
+                            {vendor.vendorID} - {vendor.vendorName}
+                        </option>
+                    ))}
                 </select>
 
-                <label htmlFor="inputOrderWeight">Order Weight LBS: </label>
+                <label htmlFor="addMore">Add</label>
                 <input
-                    type="number"
-                    step="0.01" //allows decimals? !
-                    name="inputOrderWeight"
-                    id="inputOrderWeight"
+                    type="button"
+                    name="addMore"
+                    id="addMore"
+                    onClick={addMore}
                 />
 
+                <div id="orderDetails">
+                    {details.map((detail, i) => (
+                        <CreateOrderDetailForm key={i} index={i} setDetails={setDetails} candies={candies}></CreateOrderDetailForm>
+                    ))}
+                </div>
 
-                {/*read only fields, use a special 'greyed' out class*/}
-                <label htmlFor="unitPricePerLb">Unit Price Per LB: </label>
-                <input
-                    type="number"
-                    name="unitPricePerLb"
-                    id="unitPricePerLb"
-                    value={placeholderValue}
-                    readOnly
-                    className="read-only-input"
-                />
-
-                <label htmlFor="lineTotal">Line Total: </label>
-                <input
-                    type="number"
-                    name="lineTotal"
-                    id="lineTotal"
-                    value={placeholderValue}
-                    readOnly
-                    className="read-only-input"
-                />
-
+                <div></div> {/*for temporary spacing*/}
                 <label htmlFor="subTotal">Subtotal: </label>
                 <input
                     type="number"
                     name="subTotal"
                     id="subTotal"
-                    value={placeholderValue}
+                    value={subTotal}
                     readOnly
                     className="read-only-input"
                 />
@@ -108,7 +122,7 @@ const CreateOrderForm = ({ backendURL, refreshPeople }) => {
                     type="number"
                     name="totalDue"
                     id="totalDue"
-                    value={placeholderValue}
+                    value={totalDue}
                     readOnly
                     className="read-only-input"
                 />
