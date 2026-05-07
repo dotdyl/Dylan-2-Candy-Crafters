@@ -8,10 +8,11 @@ const CreateOrderForm = ({ vendors, candies, backendURL, refreshPeople }) => {
     const placeholderValue = 0;
     const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
 
-    const [nOVendor, setnOVendor] = useState()
-    const [details, setDetails] = useState([0.0])
+    const [nOVendor, setnOVendor] = useState(0)
+    const [details, setDetails] = useState([])
     const [subTotal, setSubTotal] = useState(0.0)
     const [shippingCost, setShippingCost] = useState(0.0)
+    const [taxPct, setTaxPct] = useState(0.0)
     const [taxAmt, setTaxAmt] = useState(0.0)
     const [totalDue, setTotalDue] = useState(0.0)
 
@@ -33,8 +34,9 @@ const CreateOrderForm = ({ vendors, candies, backendURL, refreshPeople }) => {
     useEffect(() => {
 
         let sum = 0.0
-        for (const lt of details) {
-            if (lt >= 0) sum += lt
+        for (const d of details) {
+            console.log(d)
+            if (d.lineTotal >= 0) sum += d.lineTotal
         }
 
         setSubTotal(sum)
@@ -46,6 +48,13 @@ const CreateOrderForm = ({ vendors, candies, backendURL, refreshPeople }) => {
         setTotalDue(subTotal + shippingCost + taxAmt)
 
     }, [subTotal, shippingCost, taxAmt])
+
+    useEffect(() => {
+
+        const taxedAmount = subTotal * taxPct
+        setTaxAmt(taxedAmount)
+
+    }, [taxPct])
 
     return (
         <>
@@ -77,6 +86,17 @@ const CreateOrderForm = ({ vendors, candies, backendURL, refreshPeople }) => {
                 </div>
 
                 <div></div> {/*for temporary spacing*/}
+                <label htmlFor="inputTaxPct">Tax Percent: </label>
+                <input
+                    type="number"
+                    step="0.01" //allows decimals? !
+                    name="inputTaxPct"
+                    id="inputTaxPct"
+                    min={0}
+                    value={taxPct}
+                    onChange={e => {setTaxPct(e.target.value)}}
+                />
+                
                 <label htmlFor="subTotal">Subtotal: </label>
                 <input
                     type="number"
