@@ -3,8 +3,10 @@ import TableRow from "../components/TableRow";
 import CreateOrderForm from "../components/CRUD_Orders/FormCreateOrder";
 
 function Orders({ backendURL }) {
-    // Set up a state variable `people` to store and display the backend response
+   
     const [orders, setOrders] = useState([]);
+    const [candies, setCandies] = useState([]);
+    const [vendors, setVendors] = useState([]);
 
     const getData = async function () {
         try {
@@ -12,10 +14,12 @@ function Orders({ backendURL }) {
             const response = await fetch(backendURL + "/orders");
 
             // Convert the response into JSON format
-            const { orders } = await response.json();
+            const { orders, candies, vendors } = await response.json();
 
             // Update the people state with the response data
             setOrders(orders);
+            setVendors(vendors);
+            setCandies(candies);
         } catch (error) {
             // If the API call fails, print the error to the console
             console.log(error);
@@ -53,7 +57,7 @@ function Orders({ backendURL }) {
                     ))}
                 </tbody>
             </table>
-            <CreateOrderForm></CreateOrderForm>
+            <CreateOrderForm vendors={vendors} candies={candies}></CreateOrderForm>
         </>
     );
 }
