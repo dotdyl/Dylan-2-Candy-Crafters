@@ -20,7 +20,7 @@ app.get('/bsg-people', async (req, res) => {
         const query2 = 'SELECT * FROM bsg_planets;';
         const [people] = await db.query(query1);
         const [homeworlds] = await db.query(query2);
-    
+
         res.status(200).json({ people, homeworlds });  // Send the results to the frontend
 
     } catch (error) {
@@ -28,7 +28,18 @@ app.get('/bsg-people', async (req, res) => {
         // Send a generic error message to the browser
         res.status(500).send("An error occurred while executing the database queries.");
     }
-    
+
+});
+
+app.get('/candies', async (req, res) => {
+    try {
+        //TODO: implement query req to db and return as above to frontend
+    }
+    catch (error) {
+        console.error("Error executing queries:", error);
+        // Send a generic error message to the browser
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
 });
 
 app.listen(PORT, function () {
