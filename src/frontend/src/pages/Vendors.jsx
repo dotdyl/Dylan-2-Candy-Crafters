@@ -1,10 +1,58 @@
-function Vendors() {
+import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
+import TableRow from '../components/TableRow';
+
+
+
+function Vendors({ backendURL }) {
+
+    // Set up a state variable `vendors` to store and display the backend response
+    const [vendors, setVendors] = useState([]);
+
+
+    const getData = async function () {
+        try {
+            // Make a GET request to the backend
+            const response = await fetch(backendURL + '/vendors');
+
+            // Convert the response into JSON format
+            const { vendors } = await response.json();
+
+            // Update the people state with the response data
+            setVendors(vendors);
+
+        } catch (error) {
+            // If the API call fails, print the error to the console
+            console.log(error);
+        }
+
+    };
+
+    // Load table on page load
+    useEffect(() => {
+        getData();
+    }, []);
+
     return (
         <>
-            <h1>Vendors page</h1>
-            <div className="homepageDescription">
-                <p>Vendors information and Project overview here.</p>
-            </div>
+            <h1>All Vendors</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        {vendors.length > 0 && Object.keys(vendors[0]).map((header, index) => (
+                            <th key={index}>{header}</th>
+                        ))}
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {vendors.map((candy, index) => (
+                        <TableRow key={index} rowObject={candy} backendURL={backendURL} refreshCandy={getData} />
+                    ))}
+
+                </tbody>
+            </table>
         </>
     )
 } export default Vendors;
