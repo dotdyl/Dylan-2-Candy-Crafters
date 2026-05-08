@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import DeleteButton from "../ButtonDelete";
 
 const blankOrderDetail = {
     "orderID": -1,
@@ -22,21 +23,28 @@ export default function CreateOrderDetailForm({candies, index, setDetails}) {
         setUpp(candy.pricePerLb)
         const newLt = candy.pricePerLb * owp
         setLt(candy.pricePerLb * owp)
-        addToTotal(newLt)
 
-        setOrderDetail({
+        const newOrderDetail = {
             "orderID": -1,
             "candyID": candy.candyID,
             "orderWeightLbs": owp,
             "unitPricePerLb": upp,
             "lineTotal": lt
-        })
+        }
+
+        setOrderDetail(newOrderDetail)
+
+        addToTotal(newOrderDetail)
     }
 
-    const addToTotal = (lt) => {
+    const addToTotal = (nd) => {
         setDetails(d => 
-            d.map((item, i) => (i === index ? lt : item))
+            d.map((item, i) => (i === index ? nd : item))
         );
+    }
+
+    const onDelete = () => {
+        setDetails(d => d.filter((d, i) => (i !== index)))
     }
 
     useEffect(() => {
@@ -62,6 +70,7 @@ export default function CreateOrderDetailForm({candies, index, setDetails}) {
                 step="0.01" //allows decimals? !
                 name="inputOrderWeight"
                 id="inputOrderWeight"
+                min={0}
                 value={owp}
                 onChange={e => {setOwp(e.target.value); setLt(e.target.value * upp)}}
             />
@@ -88,6 +97,8 @@ export default function CreateOrderDetailForm({candies, index, setDetails}) {
                 className="read-only-input"
                 value={lt}
             />
+
+            <DeleteButton onDelete={onDelete} ></DeleteButton>
         </fieldset>
     )
 }
