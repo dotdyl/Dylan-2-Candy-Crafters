@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRow from '../components/TableRow';
-
+import CreateVendorForm from '../components/CRUD_Vendors/FormCreateVendor';
+import UpdateVendorForm from '../components/CRUD_Vendors/FormUpdateVendor';
 
 
 function Vendors({ backendURL }) {
@@ -53,6 +54,10 @@ function Vendors({ backendURL }) {
 
                 </tbody>
             </table>
+
+            <CreateVendorForm></CreateVendorForm>
+            <UpdateVendorForm vendors={vendors}></UpdateVendorForm>
         </>
     )
-} export default Vendors;
+}
+ export default Vendors;

@@ -71,13 +71,11 @@ const CreateOrderForm = ({ vendors, candies, backendURL, refreshPeople }) => {
                     ))}
                 </select>
 
-                <label htmlFor="addMore">Add</label>
-                <input
-                    type="button"
+                <button
                     name="addMore"
                     id="addMore"
                     onClick={addMore}
-                />
+                >Add Order Detail</button>
 
                 <div id="orderDetails">
                     {details.map((detail, i) => (

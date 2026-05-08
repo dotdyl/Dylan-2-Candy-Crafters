@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRow from '../components/TableRow';
+import CreateInventorySpaceForm from '../components/CRUD_InventorySpaces/FormCreateInventorySpace';
+import UpdateInventorySpaceForm from '../components/CRUD_InventorySpaces/FormUpdateInventorySpace';
 
 
 
@@ -7,6 +9,7 @@ function InventorySpaces({ backendURL }) {
 
     // Set up a state variable `people` to store and display the backend response
     const [inventorySpaces, setInventorySpaces] = useState([]);
+    const [candies, setCandies] = useState([]);
 
     const getData = async function () {
         try {
@@ -14,10 +17,11 @@ function InventorySpaces({ backendURL }) {
             const response = await fetch(backendURL + '/inventory');
 
             // Convert the response into JSON format
-            const { inventorySpaces } = await response.json();
+            const { inventorySpaces, candies } = await response.json();
 
             // Update the people state with the response data
             setInventorySpaces(inventorySpaces);
+            setCandies(candies);
 
         } catch (error) {
             // If the API call fails, print the error to the console
@@ -52,6 +56,9 @@ function InventorySpaces({ backendURL }) {
 
                 </tbody>
             </table>
+
+            <CreateInventorySpaceForm candies={candies}></CreateInventorySpaceForm>
+            <UpdateInventorySpaceForm inventorySpaces={inventorySpaces} candies={candies}></UpdateInventorySpaceForm>
         </>
     )
 } export default InventorySpaces;

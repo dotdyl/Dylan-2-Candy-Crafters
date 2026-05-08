@@ -1,13 +1,16 @@
-import DeletePersonForm from './DeletePersonForm';
+import DeleteButton from './ButtonDelete';
 
-const TableRow = ({ rowObject, backendURL, refreshPeople }) => {
+const TableRow = ({ rowObject, backendURL, refreshPeople, onDelete }) => {
+
     return (
         <tr>
             {Object.values(rowObject).map((value, index) => (
                 <td key={index}>{value}</td>
             ))}
             
-            <DeletePersonForm rowObject={rowObject} backendURL={backendURL} refreshPeople={refreshPeople} />
+            <td>
+                <DeleteButton onDelete={onDelete} />
+            </td>
         </tr>
     );
 };

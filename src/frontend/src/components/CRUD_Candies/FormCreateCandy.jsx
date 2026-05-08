@@ -23,7 +23,7 @@ const CreateCandyForm = ({ backendURL, refreshPeople }) => {
                     name="createLbsPerGallon"
                     id="createLbsPerGallon"
                 />
-                <input type="submit" />
+                <button type="submit">Add</button>
             </form>
         </>
     );
