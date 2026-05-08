@@ -61,6 +61,7 @@ function Orders({ backendURL }) {
                 </tbody>
             </table>
             {/*Order Details Table*/}
+            <h1>All Order Details</h1>
             <table>
                 <thead>
                     <tr>
