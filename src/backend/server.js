@@ -9,32 +9,6 @@ app.use(express.json()); // this is needed for post requests
 
 const PORT = 5000;
 
-/***  
- * 
- * READ ROUTES
- * 
- * ***/
-app.get('/bsg-people', async (req, res) => {
-    try {
-        // Create and execute our queries
-        // In query1, we use a JOIN clause to display the names of the homeworlds
-        const query1 = `SELECT bsg_people.id, bsg_people.fname, bsg_people.lname, \
-            bsg_planets.name AS 'homeworld', bsg_people.age FROM bsg_people \
-            LEFT JOIN bsg_planets ON bsg_people.homeworld = bsg_planets.id;`;
-        const query2 = 'SELECT * FROM bsg_planets;';
-        const [people] = await db.query(query1);
-        const [homeworlds] = await db.query(query2);
-
-        res.status(200).json({ people, homeworlds });  // Send the results to the frontend
-
-    } catch (error) {
-        console.error("Error executing queries:", error);
-        // Send a generic error message to the browser
-        res.status(500).send("An error occurred while executing the database queries.");
-    }
-
-});
-
 app.get('/candies', async (req, res) => {
     try {
         //TODO: implement query req to db and return as above to frontend
@@ -88,10 +62,12 @@ app.get('/orders', async (req, res) => {
         const query1 = 'SELECT * FROM orders;';
         const query2 = 'SELECT * FROM vendors;';
         const query3 = 'SELECT * FROM candies;';
+        const query4 = 'SELECT * FROM orderDetails;'
         const [orders] = await db.query(query1);
         const [vendors] = await db.query(query2);
         const [candies] = await db.query(query3);
-        res.status(200).json({ orders, candies, vendors }); //send results to frontend
+        const [orderDetails] = await db.query(query4);
+        res.status(200).json({ orders, candies, vendors, orderDetails }); //send results to frontend
     }
     catch (error) {
         console.error("Error executing queries:", error);
