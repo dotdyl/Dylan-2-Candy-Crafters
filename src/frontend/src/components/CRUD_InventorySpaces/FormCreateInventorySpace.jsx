@@ -9,18 +9,18 @@ const CreateInventorySpaceForm = ({ backendURL, candies }) => {
             <h2>Create a Inventory Space</h2>
 
             <form className="cuForm" onSubmit={e => {e.preventDefault()}}>
-                <label htmlFor="createInventoryID">Inventory ID (Unique): </label>
+                <label htmlFor="createInventoryId">Inventory Id (Unique): </label>
                 <input
                     type="number"
-                    name="createInventoryID"
-                    id="createInventoryID"
+                    name="createInventoryId"
+                    id="createInventoryId"
                 />
-                <label htmlFor="assingCandyID">Candy: </label>
-                <select name="assingCandyID" id="assingCandyID" onChange={e => {setiCandy(JSON.parse(e.target.value))}}>
+                <label htmlFor="assingCandyId">Candy: </label>
+                <select name="assingCandyId" id="assingCandyId" onChange={e => {setiCandy(JSON.parse(e.target.value))}}>
                     <option selected value={null}>-- Optionally choose a candy --</option>
                     {candies.map((candy) => (
-                        <option key={candy.candyID} value={JSON.stringify(candy)}>
-                            {candy.candyID} - {candy.candyName}
+                        <option key={candy.candyId} value={JSON.stringify(candy)}>
+                            {candy.candyId} - {candy.candyName}
                         </option>
                     ))}
                 </select>

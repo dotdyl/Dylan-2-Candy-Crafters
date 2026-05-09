@@ -23,12 +23,12 @@ const UpdateCandyForm = ({ candies, backendURL, refreshCandy }) => {
         <>
             <h2>Update a Candy</h2>
             <form className='cuForm'>
-                <label htmlFor="updateCandyByID">Candy to Update: </label>
-                <select name="updateCandyByID" id="updateCandyByID" onChange={e => {setUpdatedCandy(JSON.parse(e.target.value))}}>
+                <label htmlFor="updateCandyById">Candy to Update: </label>
+                <select name="updateCandyById" id="updateCandyById" onChange={e => {setUpdatedCandy(JSON.parse(e.target.value))}}>
                     <option value="">Select a Candy</option>
                     {candies.map((candy) => (
                         <option key={candy.id} value={JSON.stringify(candy)}>
-                            {candy.candyID} - {candy.candyName}
+                            {candy.candyId} - {candy.candyName}
                         </option>
                     ))}
                 </select>

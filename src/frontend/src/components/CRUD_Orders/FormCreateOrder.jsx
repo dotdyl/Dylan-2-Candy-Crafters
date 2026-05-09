@@ -6,7 +6,7 @@ const CreateOrderForm = ({ vendors, candies, backendURL, refreshPeople }) => {
     // Placeholder values for the read-only fields
     // In a real app, these would be variables or state like {calculatedSubtotal}
     const placeholderValue = 0;
-    const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+    const currentDate = new Date().toISOString().split('Z')[0]; // YYYY-MM-DD format
 
     const [nOVendor, setnOVendor] = useState(0)
     const [details, setDetails] = useState([])
@@ -61,12 +61,12 @@ const CreateOrderForm = ({ vendors, candies, backendURL, refreshPeople }) => {
             <h2>Create an Order</h2>
 
             <form className="cuForm" onSubmit={e => {e.preventDefault(); console.log(e)}}>
-                <label htmlFor="assingVendorID">Vendor: </label>
-                <select name="assingVendorID" id="assingVendorID" required onChange={e => {setnOVendor(e.target.value)}}>
+                <label htmlFor="assingVendorId">Vendor: </label>
+                <select name="assingVendorId" id="assingVendorId" required onChange={e => {setnOVendor(e.target.value)}}>
                     <option disabled selected hidden value={null}>-- Please choose a vendor --</option>
                     {vendors.map((vendor) => (
-                        <option key={vendor.vendorID} value={vendor.vendorID}>
-                            {vendor.vendorID} - {vendor.vendorName}
+                        <option key={vendor.vendorId} value={vendor.vendorId}>
+                            {vendor.vendorId} - {vendor.vendorName}
                         </option>
                     ))}
                 </select>
@@ -127,7 +127,7 @@ const CreateOrderForm = ({ vendors, candies, backendURL, refreshPeople }) => {
 
                 <label htmlFor="orderDate">Order Date: </label>
                 <input
-                    type="date"
+                    type="datetime-local"
                     name="orderDate"
                     id="orderDate"
                     value={currentDate}

@@ -1,5 +1,8 @@
 const db = require('./database/db-connector');
 const express = require('express');
+const dotenv = require('dotenv')
+
+dotenv.config({path: "../frontend/.env"})
 
 const app = express();
 const cors = require('cors');
@@ -7,12 +10,12 @@ const cors = require('cors');
 app.use(cors({ credentials: true, origin: "*" }));
 app.use(express.json()); // this is needed for post requests
 
-const PORT = 5000;
+const PORT = process.env.VITE_BACKEND_PORT;
 
 app.get('/candies', async (req, res) => {
     try {
         //TODO: implement query req to db and return as above to frontend
-        const query1 = 'SELECT * FROM candies;';
+        const query1 = 'SELECT * FROM Candies;';
         const [candies] = await db.query(query1);
         res.status(200).json({ candies }); //send results to frontend
     }
@@ -27,7 +30,7 @@ app.get('/candies', async (req, res) => {
 app.get('/vendors', async (req, res) => {
     try {
         //TODO: implement query req to db and return as above to frontend
-        const query1 = 'SELECT * FROM vendors;';
+        const query1 = 'SELECT * FROM Vendors;';
         const [vendors] = await db.query(query1);
         res.status(200).json({ vendors }); //send results to frontend
     }
@@ -41,8 +44,8 @@ app.get('/vendors', async (req, res) => {
 app.get('/inventory', async (req, res) => {
     try {
         //TODO: implement query req to db and return as above to frontend
-        const query1 = 'SELECT * FROM inventorySpaces;';
-        const query2 = 'SELECT * FROM candies;';
+        const query1 = 'SELECT * FROM InventorySpaces;';
+        const query2 = 'SELECT * FROM Candies;';
         const [inventorySpaces] = await db.query(query1);
         const [candies] = await db.query(query2)
         
@@ -59,10 +62,10 @@ app.get('/inventory', async (req, res) => {
 app.get('/orders', async (req, res) => {
     try {
         //TODO: implement query req to db and return as above to frontend
-        const query1 = 'SELECT * FROM orders;';
-        const query2 = 'SELECT * FROM vendors;';
-        const query3 = 'SELECT * FROM candies;';
-        const query4 = 'SELECT * FROM orderDetails;'
+        const query1 = 'SELECT * FROM Orders;';
+        const query2 = 'SELECT * FROM Vendors;';
+        const query3 = 'SELECT * FROM Candies;';
+        const query4 = 'SELECT * FROM OrderDetails;'
         const [orders] = await db.query(query1);
         const [vendors] = await db.query(query2);
         const [candies] = await db.query(query3);

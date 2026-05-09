@@ -9,9 +9,8 @@ import InventorySpaces from './pages/InventorySpaces';
 import Vendors from './pages/Vendors';
 
 // Components
-
 // Define the backend port and URL for API requests
-const backendPort = 5000;  // Use the port you assigned to the backend server, this would normally go in a .env file
+const backendPort = import.meta.env.VITE_BACKEND_PORT;  // Use the port you assigned to the backend server, this would normally go in a .env file
 const backendURL = `http://classwork.engr.oregonstate.edu:${backendPort}`;
 
 function App() {

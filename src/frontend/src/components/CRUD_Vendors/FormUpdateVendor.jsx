@@ -29,12 +29,12 @@ const UpdateVendorForm = ({ vendors, backendURL }) => {
         <>
             <h2>Update a Vendor</h2>
             <form className="cuForm" onSubmit={e => {e.preventDefault()}}>
-                <label htmlFor="updateVendorByID">Vendor to Update: </label>
-                <select name="updateVendorByID" id="updateVendorByID" onChange={e => {setUpdatedVendor(JSON.parse(e.target.value))}}>
+                <label htmlFor="updateVendorById">Vendor to Update: </label>
+                <select name="updateVendorById" id="updateVendorById" onChange={e => {setUpdatedVendor(JSON.parse(e.target.value))}}>
                     <option value="">Select a Vendor</option>
                     {vendors.map((vendor) => (
                         <option key={vendor.id} value={JSON.stringify(vendor)}>
-                            {vendor.vendorID} - {vendor.vendorName}
+                            {vendor.vendorId} - {vendor.vendorName}
                         </option>
                     ))}
                 </select>

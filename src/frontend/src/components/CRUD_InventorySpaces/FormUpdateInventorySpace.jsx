@@ -11,8 +11,8 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
         
         if (Object.keys(updateInventory).length !== 0){
             const matchCandy = candies.filter(c => {
-            const candyID = c.candyID
-            if (candyID == updateInventory.candyID){
+            const candyId = c.candyId
+            if (candyId == updateInventory.candyId){
                 return c
             }
             })[0]
@@ -36,21 +36,21 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
         <>
             <h2>Update a Inventory Space</h2>
             <form className="cuForm" onSubmit={e => {e.preventDefault()}}>
-                <label htmlFor="updateInventoryByID">Inventory Space to Update: </label>
-                <select name="updateInventoryByID" id="updateInventoryByID" onChange={e => {setUpdatedInventory(JSON.parse(e.target.value))}}>
+                <label htmlFor="updateInventoryById">Inventory Space to Update: </label>
+                <select name="updateInventoryById" id="updateInventoryById" onChange={e => {setUpdatedInventory(JSON.parse(e.target.value))}}>
                     <option selected value={null}>Select an Inventory Space</option>
                     {inventorySpaces.map((space) => (
-                        <option key={space.inventoryID} value={JSON.stringify(space)}>
-                            {space.inventoryID}
+                        <option key={space.inventoryId} value={JSON.stringify(space)}>
+                            {space.inventoryId}
                         </option>
                     ))}
                 </select>
-                <label htmlFor="updateCandyByID">Candy to Update: </label>
-                <select name="updateCandyByID" id="updateCandyByID" value={JSON.stringify(icandy)} onChange={e => {setiCandy(JSON.parse(e.target.value))}}>
+                <label htmlFor="updateCandyById">Candy to Update: </label>
+                <select name="updateCandyById" id="updateCandyById" value={JSON.stringify(icandy)} onChange={e => {setiCandy(JSON.parse(e.target.value))}}>
                     <option selected value={icandy}>-- Optionally choose a candy --</option>
                     {candies.map((candy) => (
-                        <option key={candy.candyID} value={JSON.stringify(candy)}>
-                            {candy.candyID} - {candy.candyName}
+                        <option key={candy.candyId} value={JSON.stringify(candy)}>
+                            {candy.candyId} - {candy.candyName}
                         </option>
                     ))}
                 </select>

@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import DeleteButton from "../ButtonDelete";
 
 const blankOrderDetail = {
-    "orderID": -1,
-    "candyID": -1,
+    "orderId": -1,
+    "candyId": -1,
     "orderWeightLbs": 0.0,
     "unitPricePerLb": 0.0,
     "lineTotal": 0.0
@@ -25,8 +25,8 @@ export default function CreateOrderDetailForm({candies, index, setDetails}) {
         setLt(candy.pricePerLb * owp)
 
         const newOrderDetail = {
-            "orderID": -1,
-            "candyID": candy.candyID,
+            "orderId": -1,
+            "candyId": candy.candyId,
             "orderWeightLbs": owp,
             "unitPricePerLb": upp,
             "lineTotal": lt
@@ -54,12 +54,12 @@ export default function CreateOrderDetailForm({candies, index, setDetails}) {
 
     return (
         <fieldset className="candyFields">
-            <label htmlFor="assignCandyID">Assign Candy: </label>
-            <select name="assignCandyID" id="assignCandyID" required onChange={e => {setCandy(JSON.parse(e.target.value))}}>
+            <label htmlFor="assignCandyId">Assign Candy: </label>
+            <select name="assignCandyId" id="assignCandyId" required onChange={e => {setCandy(JSON.parse(e.target.value))}}>
                 <option disabled selected hidden value={null}>-- Please choose a candy --</option>
                 {candies.map((candy) => (
-                    <option key={candy.candyID} value={JSON.stringify(candy)}>
-                        {candy.candyID} - {candy.candyName}
+                    <option key={candy.candyId} value={JSON.stringify(candy)}>
+                        {candy.candyId} - {candy.candyName}
                     </option>
                 ))}
             </select>
