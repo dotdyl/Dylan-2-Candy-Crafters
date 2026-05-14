@@ -38,6 +38,13 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) =
             setUpp(updateOrderDetail.unitPricePerLb)
             setOwp(updateOrderDetail.orderWeightLbs)
             setLt(updateOrderDetail.lineTotal)
+        } else {
+            console.log("Selecting null")
+            setiCandy({})
+            setOrder({})
+            setUpp(0)
+            setOwp(0)
+            setLt(0)
         }
     }
 
@@ -46,31 +53,35 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) =
         autofill()
     }, [updateOrderDetail])
 
+    useEffect(() => {
+        if (icandy != undefined) setUpp(icandy.pricePerLb)
+    }, [icandy])
+
     return (
         <>
-            <h2>Update a Order Detail</h2>
+            <h2>Update a Order Detail (USE WITH CAUTION)</h2>
             <form className="cuForm" onSubmit={e => {e.preventDefault()}}>
-                <label htmlFor="updateOrderDetailById">Inventory Space to Update: </label>
-                <select name="updateOrderDetailById" id="updateOrderDetailById" onChange={e => {setUpdatedOrderDetail(JSON.parse(e.target.value))}}>
-                    <option selected value={null}>Select an Order Detail</option>
+                <label htmlFor="updateOrderDetailById">Order Detail to Update: </label>
+                <select name="updateOrderDetailById" id="updateOrderDetailById" onChange={e => {console.log(e.target.value); setUpdatedOrderDetail(JSON.parse(e.target.value))}}>
+                    <option selected disabled hidden value={null}>Select an Order Detail</option>
                     {orderDetails.map((detail) => (
                         <option key={detail.orderDetailsId} value={JSON.stringify(detail)}>
                             {detail.orderDetailsId}
                         </option>
                     ))}
                 </select>
-                <label htmlFor="updateOrderById">Order to Update: </label>
-                <select name="updateOrderById" id="updatupdateOrderByIdeCandyById" value={JSON.stringify(order)} onChange={e => {setOrder(JSON.parse(e.target.value))}}>
-                    <option selected value={order}>Choose order</option>
+                <label htmlFor="updateOrderById">Change Order (NOT RECOMMENDED): </label>
+                <select name="updateOrderById" id="updateOrderById" value={JSON.stringify(order)} onChange={e => {setOrder(JSON.parse(e.target.value))}}>
+                    <option selected value={order}>Select an Order</option>
                     {orders.map((order) => (
                         <option key={order.orderId} value={JSON.stringify(order)}>
                             {order.orderId}
                         </option>
                     ))}
                 </select>
-                <label htmlFor="updateCandyById">Candy to Update: </label>
+                <label htmlFor="updateCandyById">Change Candy: </label>
                 <select name="updateCandyById" id="updateCandyById" value={JSON.stringify(icandy)} onChange={e => {setiCandy(JSON.parse(e.target.value))}}>
-                    <option selected value={icandy}>-- Optionally choose a candy --</option>
+                    <option selected value={icandy}>Select a Candy</option>
                     {candies.map((candy) => (
                         <option key={candy.candyId} value={JSON.stringify(candy)}>
                             {candy.candyId} - {candy.candyName}
