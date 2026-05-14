@@ -23,7 +23,6 @@ function Orders({ backendURL }) {
             setVendors(vendors);
             setCandies(candies);
             setOrderDetails(orderDetails)
-            console.log("Candies is:", candies) //todo what is up 
         } catch (error) {
             // If the API call fails, print the error to the console
             console.log(error);
@@ -52,10 +51,14 @@ function Orders({ backendURL }) {
                 </thead>
 
                 <tbody>
-                    {orders.map((candy, index) => (
+                    {/*Use '...' to SPREAD the detail OBJ across its pieces/subfields, one of these is candyID, we now can change it dynamically.*/}
+                    {orders.map((order, index) => (
                         <TableRow
                             key={index}
-                            rowObject={candy}
+                            rowObject={{
+                                ...order,
+                                vendorId: `${order.vendorId} - ${vendors.find(v => v.vendorId === order.vendorId)?.vendorName || 'Unknown'}`
+                            }}
                             backendURL={backendURL}
                             refreshOrders={getData}
                         />
@@ -77,12 +80,13 @@ function Orders({ backendURL }) {
                 </thead>
 
                 <tbody>
+                    {/*Use '...' to SPREAD the detail OBJ across its pieces/subfields, one of these is candyID, we now can change it dynamically.*/}
                     {orderDetails.map((detail, index) => (
                         <TableRow
                             key={index}
                             rowObject={{
-                                detail,
-                                candyId: `${detail.candyId} ("${candies.find(candy => candy.candyId === detail.candyId)?.candyName|| 'Unknown'}")`
+                                ...detail,
+                                candyId: `${detail.candyId} - ("${candies.find(candy => candy.candyId === detail.candyId)?.candyName || 'Unknown'}")`
                             }}
                             backendURL={backendURL}
                             refreshOrders={getData}
@@ -91,7 +95,7 @@ function Orders({ backendURL }) {
                 </tbody>
             </table>
             <CreateOrderForm vendors={vendors} candies={candies}></CreateOrderForm>
-            <UpdateOrderDetailForm candies={candies} orderDetails={orderDetails} orders={orders}/>
+            <UpdateOrderDetailForm candies={candies} orderDetails={orderDetails} orders={orders} />
         </>
     );
 }
