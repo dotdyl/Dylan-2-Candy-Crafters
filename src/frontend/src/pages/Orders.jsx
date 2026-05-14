@@ -17,11 +17,12 @@ function Orders({ backendURL }) {
             // Convert the response into JSON format
             const { orders, candies, vendors, orderDetails } = await response.json();
 
-            // Update the people state with the response data
+            // Update the various state variables with the new response data
             setOrders(orders);
             setVendors(vendors);
             setCandies(candies);
             setOrderDetails(orderDetails)
+            console.log("Candies is:", candies) //todo what is up 
         } catch (error) {
             // If the API call fails, print the error to the console
             console.log(error);
@@ -75,10 +76,13 @@ function Orders({ backendURL }) {
                 </thead>
 
                 <tbody>
-                    {orderDetails.map((candy, index) => (
+                    {orderDetails.map((detail, index) => (
                         <TableRow
                             key={index}
-                            rowObject={candy}
+                            rowObject={{
+                                detail,
+                                candyId: `${detail.candyId} ("${candies.find(candy => candy.candyId === detail.candyId)?.candyName|| 'Unknown'}")`
+                            }}
                             backendURL={backendURL}
                             refreshOrders={getData}
                         />
