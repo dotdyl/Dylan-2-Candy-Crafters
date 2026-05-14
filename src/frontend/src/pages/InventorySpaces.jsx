@@ -50,9 +50,33 @@ function InventorySpaces({ backendURL }) {
                 </thead>
 
                 <tbody>
-                    {inventorySpaces.map((candy, index) => (
-                        <TableRow key={index} rowObject={candy} backendURL={backendURL} refreshCandy={getData} />
-                    ))}
+                    {inventorySpaces.map((space, index) => {
+
+                        const matchCandy = candies.filter(c => {
+                        const candyId = c.candyId
+                        if (candyId == space.candyId){
+                            return c
+                        }
+                        })[0]
+
+                        console.log("Match: ", matchCandy)
+
+                        let candyCol = `${space.candyId}`
+
+                        if (matchCandy != undefined){
+                            candyCol = `${space.candyId} - ${matchCandy.candyName}`
+                        }
+
+                        const rowObject = {
+                            "inventoryId": space.inventoryId, 
+                            "candyId": candyCol, 
+                            "lastStocked": space.lastStocked, 
+                            "gallonsFilled": space.gallonsFilled
+                        }
+
+                        return (
+                        <TableRow key={index} rowObject={rowObject} backendURL={backendURL} refreshCandy={getData} />
+                    )})}
 
                 </tbody>
             </table>
