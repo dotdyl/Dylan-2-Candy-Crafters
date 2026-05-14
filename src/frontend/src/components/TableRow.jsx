@@ -7,7 +7,7 @@ const TableRow = ({ rowObject, backendURL, refreshPeople, onDelete }) => {
             {Object.values(rowObject).map((value, index) => (
                 <td key={index}>{value}</td>
             ))}
-            
+
             <td>
                 <DeleteButton onDelete={onDelete} />
             </td>
