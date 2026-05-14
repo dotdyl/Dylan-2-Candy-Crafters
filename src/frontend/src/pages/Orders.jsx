@@ -86,7 +86,7 @@ function Orders({ backendURL }) {
                             key={index}
                             rowObject={{
                                 ...detail,
-                                candyId: `${detail.candyId} - ("${candies.find(candy => candy.candyId === detail.candyId)?.candyName || 'Unknown'}")`
+                                candyId: `${detail.candyId} - ${candies.find(candy => candy.candyId === detail.candyId)?.candyName || 'Unknown'}`
                             }}
                             backendURL={backendURL}
                             refreshOrders={getData}
