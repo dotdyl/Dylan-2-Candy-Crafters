@@ -10,6 +10,8 @@ SET AUTOCOMMIT = 0;
 
 -- --------------------------------------------------------
 
+-- Note: there is no 'ON UPDATE CASCADE' constraint for any FK values, since no referenced PKs are designed to change values
+
 --
 -- Table structure for table `candies`
 --
@@ -26,11 +28,11 @@ CREATE OR REPLACE TABLE `Candies` (
 -- Dumping data for table `candies`
 --
 
-INSERT INTO `Candies` (`candyId`, `candyName`, `pricePerLb`, `lbsPerGallon`) VALUES
-(1, 'Peppermint Sweethearts', 9.00, 5.00),
-(2, 'Fudge Funboys', 8.00, 7.15),
-(3, 'Red Rhino Cinnamon Twigs', 5.00, 5.25),
-(4, 'Pineapple Creme Gummies', 7.57, 5.70);
+INSERT INTO `Candies` (`candyName`, `pricePerLb`, `lbsPerGallon`) VALUES
+('Peppermint Sweethearts', 9.00, 5.00),
+('Fudge Funboys', 8.00, 7.15),
+('Red Rhino Cinnamon Twigs', 5.00, 5.25),
+('Pineapple Creme Gummies', 7.57, 5.70);
 
 --
 -- Table structure for table `vendors`
