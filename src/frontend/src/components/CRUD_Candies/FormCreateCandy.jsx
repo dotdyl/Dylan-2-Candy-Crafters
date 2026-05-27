@@ -1,31 +1,72 @@
 const CreateCandyForm = ({ backendURL, refreshPeople }) => {
-    //no real major logic for this component, just jsx below
     return (
-        <>
-            <h2>Create a Candy</h2>
+        // max-w-5xl gives it a wider container to fit all inputs smoothly in a line
+        <div className="card bg-base-100 max-w-full border border-base-200 shadow-md">
+            <div className="card-body p-4 sm:p-6">
+                  
+                {/*Main Heading - just standalone*/}
+                <div className="lg:mb-3 flex-shrink-0">
+                    <h2 className="text-lg font-bold text-base-content flex items-center gap-1">
+                    Create Candy
+                    </h2>
+                </div>
 
-            <form className="cuForm">
-                <label htmlFor="createCandy">Candy Name: </label>
-                <input
-                    type="text"
-                    name="createCandy"
-                    id="createCandy"
-                />
-                <label htmlFor="createCandyPricePerLB">Candy Price Per LB: </label>
-                <input
-                    type="number"
-                    name="createCandyPricePerLB"
-                    id="createCandyPricePerLB"
-                />
-                <label htmlFor="createLbsPerGallon">Lbs Per Gallon: </label>
-                <input
-                    type="number"
-                    name="createLbsPerGallon"
-                    id="createLbsPerGallon"
-                />
-                <button type="submit">Add</button>
-            </form>
-        </>
+
+                <form className="flex flex-wrap items-end gap-6">  
+                    {/* Main Column: The 3 Fields aligned side-by-side */}
+                        
+                        {/* 1. Candy Name Input */}
+                        <div className="form-control w-full max-w-[250px]">
+                            <label htmlFor="createCandy" className="label py-1">
+                                <span className="label-text font-semibold text-xs">Candy Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="createCandy"
+                                id="createCandy"
+                                placeholder="e.g., Peppermint Swirl"
+                                className="input input-bordered input-primary input-sm w-full"
+                            />
+                        </div>
+
+                        {/* 2. Candy Price Input */}
+                        <div className="form-control max-w-[180px]">
+                            <label htmlFor="createCandyPricePerLB" className="label py-1">
+                                <span className="label-text font-semibold text-xs">Price Per LB</span>
+                            </label>
+                            <input
+                                type="number"
+                                name="createCandyPricePerLB"
+                                id="createCandyPricePerLB"
+                                placeholder="0.00"
+                                step="0.01"
+                                className="input input-bordered input-primary input-sm w-full"
+                            />
+                        </div>
+
+                        {/* 3. Lbs Per Gallon Input */}
+                        <div className="form-control w-full max-w-[180px]">
+                            <label htmlFor="createLbsPerGallon" className="label py-1">
+                                <span className="label-text font-semibold text-xs">Lbs Per Gallon</span>
+                            </label>
+                            <input
+                                type="number"
+                                name="createLbsPerGallon"
+                                id="createLbsPerGallon"
+                                placeholder="0"
+                                className="input input-bordered input-primary input-sm w-full"
+                            />
+                        </div>
+
+                        {/* Right Column: Submit Button row-aligned */}
+                        <div className="flex-shrink-0 lg:mb-0.5">
+                            <button type="submit" className="btn btn-primary btn-sm px-6 w-full lg:w-auto">
+                                Add Candy
+                            </button>
+                        </div>
+                </form>
+            </div>
+        </div>
     );
 };
 
