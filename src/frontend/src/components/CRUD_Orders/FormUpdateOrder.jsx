@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client"
 import CreateOrderDetailForm from "./FormCreateOrderDetail";
 
-const CreateOrderForm = ({ vendors, candies, backendURL, orders}) => {
+const UpdateOrderForm = ({ vendors, candies, backendURL, orders, orderDetails}) => {
     // Placeholder values for the read-only fields
     // In a real app, these would be variables or state like {calculatedSubtotal}
     const placeholderValue = 0;
     const currentDate = new Date().toISOString().split('Z')[0]; // YYYY-MM-DD format
 
+    const [updateOrder, setUpdateOrder] = useState({})
     const [nOVendor, setnOVendor] = useState(0)
     const [details, setDetails] = useState([])
     const [subTotal, setSubTotal] = useState(0.0)
@@ -25,6 +26,48 @@ const CreateOrderForm = ({ vendors, candies, backendURL, orders}) => {
         })
 
     }
+
+    const autofill = () => {
+        
+        if (Object.keys(updateOrder).length !== 0){
+            const matchVendor = vendors.filter(v => {
+            const vendorId = v.vendorId
+            if (vendorId == updateOrder.vendorId){
+                return v
+            }
+            })[0]
+            const matchDetails = orderDetails.filter(d => {
+            const orderId = d.orderId
+            if (orderId == updateOrder.orderId){
+                return d
+            }
+            })
+            console.log("match details:", matchDetails)
+            setnOVendor(matchVendor)
+            setDetails(matchDetails)
+            // setSubTotal(updateOrder.subTotal)
+            setShippingCost(updateOrder.shippingCost)
+            setTaxPct(updateOrder.taxPct)
+            // setTaxAmt(updateOrder.taxAmt)
+            // setTotalDue(updateOrder.totalDue)
+        } else {
+            console.log("Selecting null")
+            setnOVendor({})
+            setDetails([])
+            setSubTotal(0)
+            setShippingCost(0)
+            setTaxPct(0)
+            setTaxAmt(0)
+            setTotalDue(0)
+        }
+    }
+
+    useEffect(() => {
+
+        console.log("selected order:", updateOrder)
+        autofill()
+    }, [updateOrder])
+
 
     const addMore = () => {
 
@@ -58,9 +101,19 @@ const CreateOrderForm = ({ vendors, candies, backendURL, orders}) => {
 
     return (
         <>
-            <h2>Create an Order with related Order Details</h2>
+            <h2>Update an Order and its related Order Details (USE WITH CAUTION)</h2>
 
             <form className="cuForm" onSubmit={e => {e.preventDefault(); console.log(e)}}>
+
+                <label htmlFor="updateOrderById">Select Order</label>
+                <select name="updateOrderById" id="updateOrderById" value={JSON.stringify(updateOrder)} onChange={e => {setUpdateOrder(JSON.parse(e.target.value))}}>
+                    <option selected value={updateOrder}>Select an Order</option>
+                    {orders.map((order) => (
+                        <option key={order.orderId} value={JSON.stringify(order)}>
+                            {order.orderId}
+                        </option>
+                    ))}
+                </select>
                 <label htmlFor="assingVendorId">Vendor: </label>
                 <select name="assingVendorId" id="assingVendorId" required onChange={e => {setnOVendor(e.target.value)}}>
                     <option disabled selected hidden value={null}>-- Please choose a vendor --</option>
@@ -78,9 +131,12 @@ const CreateOrderForm = ({ vendors, candies, backendURL, orders}) => {
                 >Add Order Detail</button>
 
                 <div id="orderDetails">
-                    {details.map((detail, i) => (
-                        <CreateOrderDetailForm key={i} index={i} setDetails={setDetails} candies={candies}></CreateOrderDetailForm>
-                    ))}
+                    {details.map((detail, i) => {
+                        console.log("Detail at index ", i, ":", detail);
+                        return (
+                        <CreateOrderDetailForm key={i} index={i} setDetails={setDetails} candies={candies} existingOrderDetail={detail}></CreateOrderDetailForm>
+                        )
+                    })}
                 </div>
 
                 <div></div> {/*for temporary spacing*/}
@@ -151,4 +207,4 @@ const CreateOrderForm = ({ vendors, candies, backendURL, orders}) => {
     );
 };
 
-export default CreateOrderForm;
+export default UpdateOrderForm;

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react"; // Importing useState for managing state in the component
 import TableRow from "../components/TableRow";
 import CreateOrderForm from "../components/CRUD_Orders/FormCreateOrder";
+import UpdateOrderForm from "../components/CRUD_Orders/FormUpdateOrder";
 import UpdateOrderDetailForm from "../components/CRUD_Orders/FormUpdateOrderDetail";
+import CreateOrderDetailForm from "../components/CRUD_Orders/FormCreateOrderDetail";
 
 function Orders({ backendURL }) {
 
@@ -94,7 +96,10 @@ function Orders({ backendURL }) {
                     ))}
                 </tbody>
             </table>
-            <CreateOrderForm vendors={vendors} candies={candies}></CreateOrderForm>
+            <CreateOrderForm vendors={vendors} candies={candies} orders={orders}></CreateOrderForm>
+            {/*Not necessary, probably, but the form was made: <UpdateOrderForm vendors={vendors} candies={candies} orders={orders} orderDetails={orderDetails}></UpdateOrderForm>*/}
+            <h2>Create an Order Detail</h2>
+            <CreateOrderDetailForm candies={candies} orders={orders}></CreateOrderDetailForm>
             <UpdateOrderDetailForm candies={candies} orderDetails={orderDetails} orders={orders} />
         </>
     );
