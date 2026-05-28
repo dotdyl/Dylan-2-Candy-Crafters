@@ -12,6 +12,22 @@ app.use(express.json()); // this is needed for post requests
 
 const PORT = process.env.VITE_BACKEND_PORT;
 
+app.get('/load', async (req, res) => {
+    try {
+        //TODO: implement query req to db and return as above to frontend
+        const query1 = 'CALL sp_load_candy_db();';
+        const response = await db.query(query1);
+        console.log("YES");
+        res.status(200).send("success"); //send results to frontend
+
+    }
+    catch (error) {
+        console.error("Error executing queries:", error);
+        // Send a generic error message to the browser
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
+});
+
 app.get('/candies', async (req, res) => {
     try {
         //TODO: implement query req to db and return as above to frontend
