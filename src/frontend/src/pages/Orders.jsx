@@ -38,67 +38,76 @@ function Orders({ backendURL }) {
 
     return (
         <>
-            <h1>All Orders</h1>
+            <div className='card bg-base-100 max-w-full border border-base-300 shadow-md mb-6'>
+                <div className='card-body'>
+                    <h1 className='text-xl font-bold text-base-content'>All Orders</h1>
 
-            {/*Orders Table*/}
-            <table>
-                <thead>
-                    <tr>
-                        {orders.length > 0 &&
-                            Object.keys(orders[0]).map((header, index) => (
-                                <th key={index}>{header}</th>
+                    {/*Orders Table*/}
+                    <table className='table table-zebra'>
+                        <thead className='text-base text-primary'>
+                            <tr>
+                                {orders.length > 0 &&
+                                    Object.keys(orders[0]).map((header, index) => (
+                                        <th key={index}>{header}</th>
+                                    ))}
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {/*Use '...' to SPREAD the detail OBJ across its pieces/subfields, one of these is candyID, we now can change it dynamically.*/}
+                            {orders.map((order, index) => (
+                                <TableRow
+                                    key={index}
+                                    rowObject={{
+                                        ...order,
+                                        vendorId: `${order.vendorId} - ${vendors.find(v => v.vendorId === order.vendorId)?.vendorName || 'Unknown'}`
+                                    }}
+                                    backendURL={backendURL}
+                                    refreshOrders={getData}
+                                />
                             ))}
-                        <th></th>
-                    </tr>
-                </thead>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                <tbody>
-                    {/*Use '...' to SPREAD the detail OBJ across its pieces/subfields, one of these is candyID, we now can change it dynamically.*/}
-                    {orders.map((order, index) => (
-                        <TableRow
-                            key={index}
-                            rowObject={{
-                                ...order,
-                                vendorId: `${order.vendorId} - ${vendors.find(v => v.vendorId === order.vendorId)?.vendorName || 'Unknown'}`
-                            }}
-                            backendURL={backendURL}
-                            refreshOrders={getData}
-                        />
-                    ))}
-                </tbody>
-            </table>
-            <br></br>
-            {/*Order Details Table*/}
-            <h1>All Order Details</h1>
-            <table>
-                <thead>
-                    <tr>
-                        {orderDetails.length > 0 &&
-                            Object.keys(orderDetails[0]).map((header, index) => (
-                                <th key={index}>{header}</th>
+            <div className='card bg-base-100 max-w-full border border-base-300 shadow-md mb-6'>
+                <div className='card-body'>
+                    <h1 className='text-xl font-bold text-base-content'>All Order Details</h1>
+                    <table className='table table-zebra'>
+                        <thead className='text-base text-primary'>
+                            <tr>
+                                {orderDetails.length > 0 &&
+                                    Object.keys(orderDetails[0]).map((header, index) => (
+                                        <th key={index}>{header}</th>
+                                    ))}
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {/*Use '...' to SPREAD the detail OBJ across its pieces/subfields, one of these is candyID, we now can change it dynamically.*/}
+                            {orderDetails.map((detail, index) => (
+                                <TableRow
+                                    key={index}
+                                    rowObject={{
+                                        ...detail,
+                                        candyId: `${detail.candyId} - ${candies.find(candy => candy.candyId === detail.candyId)?.candyName || 'Unknown'}`
+                                    }}
+                                    backendURL={backendURL}
+                                    refreshOrders={getData}
+                                />
                             ))}
-                        <th></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {/*Use '...' to SPREAD the detail OBJ across its pieces/subfields, one of these is candyID, we now can change it dynamically.*/}
-                    {orderDetails.map((detail, index) => (
-                        <TableRow
-                            key={index}
-                            rowObject={{
-                                ...detail,
-                                candyId: `${detail.candyId} - ${candies.find(candy => candy.candyId === detail.candyId)?.candyName || 'Unknown'}`
-                            }}
-                            backendURL={backendURL}
-                            refreshOrders={getData}
-                        />
-                    ))}
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <CreateOrderForm vendors={vendors} candies={candies} orders={orders}></CreateOrderForm>
             {/*Not necessary, probably, but the form was made: <UpdateOrderForm vendors={vendors} candies={candies} orders={orders} orderDetails={orderDetails}></UpdateOrderForm>*/}
-            <h2>Create an Order Detail</h2>
+            <div className="mt-4 mb-2 ml-1">
+                <h2 className="text-lg font-bold text-base-content">Create an Order Detail</h2>
+            </div>
             <CreateOrderDetailForm candies={candies} orders={orders}></CreateOrderDetailForm>
             <UpdateOrderDetailForm candies={candies} orderDetails={orderDetails} orders={orders} />
         </>

@@ -35,25 +35,29 @@ function Vendors({ backendURL }) {
 
     return (
         <>
-            <h1>All Vendors</h1>
+            <div className='card bg-base-100 max-w-full border border-base-300 shadow-md mb-6'>
+                <div className='card-body'>
+                    <h1 className='text-xl font-bold text-base-content'>All Vendors</h1>
 
-            <table>
-                <thead>
-                    <tr>
-                        {vendors.length > 0 && Object.keys(vendors[0]).map((header, index) => (
-                            <th key={index}>{header}</th>
-                        ))}
-                        <th></th>
-                    </tr>
-                </thead>
+                    <table className='table table-zebra'>
+                        <thead className='text-base text-primary'>
+                            <tr>
+                                {vendors.length > 0 && Object.keys(vendors[0]).map((header, index) => (
+                                    <th key={index}>{header}</th>
+                                ))}
+                                <th></th>
+                            </tr>
+                        </thead>
 
-                <tbody>
-                    {vendors.map((candy, index) => (
-                        <TableRow key={index} rowObject={candy} backendURL={backendURL} refreshCandy={getData} />
-                    ))}
+                        <tbody>
+                            {vendors.map((candy, index) => (
+                                <TableRow key={index} rowObject={candy} backendURL={backendURL} refreshCandy={getData} />
+                            ))}
 
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
             <CreateVendorForm></CreateVendorForm>
             <UpdateVendorForm vendors={vendors}></UpdateVendorForm>
