@@ -1,13 +1,16 @@
+// Citation for the following module:
+// Date: 05/28/2026
+// Based on:
+// Source URL: https://canvas.oregonstate.edu/courses/2042369/assignments/10464666?module_item_id=26640209
+
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRow from '../components/TableRow';
 import CreateCandyForm from '../components/CRUD_Candies/FormCreateCandy';
 import UpdateCandyForm from '../components/CRUD_Candies/FormUpdateCandy';
 
 
-
 function Candies({ backendURL }) {
 
-    // Set up a state variable `people` to store and display the backend response
     const [candies, setCandies] = useState([]);
 
     const getData = async function () {
@@ -32,8 +35,10 @@ function Candies({ backendURL }) {
         const response = await fetch(backendURL + `/candies-delete/${id}`, {method: 'DELETE'});
         if (response.status == 200) {
           setCandies(candies.filter(e => {
-            console.log(e);
             return e.candyId !== id;}));
+        } else {
+            const text = await response.json()
+            alert(text)
         }
       } catch (err) {
         console.log(err);

@@ -54,6 +54,7 @@ const UpdateVendorForm = ({ vendors, backendURL }) => {
                             name="createVendorName"
                             id="createVendorName"
                             value={vendorName}
+                            onChange={e => setVendorName(e.target.value)}
                             className="input input-bordered input-primary input-sm w-full"
                         />
                     </div>
@@ -66,6 +67,7 @@ const UpdateVendorForm = ({ vendors, backendURL }) => {
                             name="createVendorAddressLine1"
                             id="createVendorAddressLine1"
                             value={addressLine1}
+                            onChange={e => setAddressLine1(e.target.value)}
                             className="input input-bordered input-primary input-sm w-full"
                         />
                     </div>
@@ -78,6 +80,7 @@ const UpdateVendorForm = ({ vendors, backendURL }) => {
                             name="createVendorAddressLine2"
                             id="createVendorAddressLine2"
                             value={addressLine2 === null ? "" : addressLine2}
+                            onChange={e => setAddressLine2(e.target.value)}
                             className="input input-bordered input-primary input-sm w-full"
                         />
                     </div>
@@ -90,6 +93,7 @@ const UpdateVendorForm = ({ vendors, backendURL }) => {
                             name="createVendorCity"
                             id="createVendorCity"
                             value={city}
+                            onChange={e => setCity(e.target.value)}
                             className="input input-bordered input-primary input-sm w-full"
                         />
                     </div>
@@ -102,6 +106,7 @@ const UpdateVendorForm = ({ vendors, backendURL }) => {
                             name="createVendorState"
                             id="createVendorState"
                             value={state}
+                            onChange={e => setState(e.target.value)}
                             className="input input-bordered input-primary input-sm w-full"
                         />
                     </div>
@@ -114,6 +119,7 @@ const UpdateVendorForm = ({ vendors, backendURL }) => {
                             name="createVendorPostalCode"
                             id="createVendorPostalCode"
                             value={postalCode}
+                            onChange={e => setPostalCode(e.target.value)}
                             className="input input-bordered input-primary input-sm w-full"
                         />
                     </div>

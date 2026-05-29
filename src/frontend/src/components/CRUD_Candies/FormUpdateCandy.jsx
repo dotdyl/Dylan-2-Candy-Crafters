@@ -34,11 +34,11 @@ const UpdateCandyForm = ({ candies, backendURL, refreshCandy }) => {
                 <form className='flex flex-wrap items-end gap-6'>
 
                     <div className="form-control w-full max-w-[250px]">
-                        <label className="label" htmlFor="updateCandyById"> 
+                        <label className="label" htmlFor="updateCandyById">
                             <span className="label-text font-semibold">Candy to Update:</span>
                         </label>
-                        <select className="select select-bordered select-primary select-sm w-full max-w-xs" name="updateCandyById" id="updateCandyById" onChange={e => {setUpdatedCandy(JSON.parse(e.target.value))}}>
-                            <option value="">Select a Candy</option>
+                        <select className="select select-bordered select-primary select-sm w-full max-w-xs" defaultValue="-- Select a Candy --" name="updateCandyById" id="updateCandyById" onChange={e => {setUpdatedCandy(JSON.parse(e.target.value))}}>
+                            <option disabled hidden value={null}>-- Select a Candy --</option>
                             {candies.map((candy) => (
                                 <option key={candy.id} value={JSON.stringify(candy)}>
                                     {candy.candyId} - {candy.candyName}
@@ -48,7 +48,7 @@ const UpdateCandyForm = ({ candies, backendURL, refreshCandy }) => {
                     </div>
 
                     <div className="form-control w-full max-w-[250px]">
-                        <label className="label" htmlFor="updateCandyName"> 
+                        <label className="label" htmlFor="updateCandyName">
                             <span className="label-text font-semibold">
                                 Candy Name:
                             </span>
@@ -58,19 +58,21 @@ const UpdateCandyForm = ({ candies, backendURL, refreshCandy }) => {
                             name="updateCandyName"
                             id="updateCandyName"
                             value={candyName}
+                            onChange={e => setCandyName(e.target.value)}
                             className="input input-bordered input-primary input-sm w-full"
                         />
                     </div>
-                    
+
                     <div className="form-control w-full max-w-[200px]">
                         <label className="label" htmlFor="updateCandyPricePerLB">
-                            <span className="label-text font-semibold">Candy Price Per LB:</span> 
+                            <span className="label-text font-semibold">Candy Price Per LB:</span>
                         </label>
                         <input
                             type="number"
                             name="updateCandyPricePerLB"
                             id="updateCandyPricePerLB"
                             value={ppp}
+                            onChange={e => setPpp(e.target.value)}
                             className="input input-bordered input-primary input-sm w-full"
                         />
                     </div>
@@ -84,6 +86,7 @@ const UpdateCandyForm = ({ candies, backendURL, refreshCandy }) => {
                             name="updateCandylbsPerGallon"
                             id="updateCandylbsPerGallon"
                             value={ppg}
+                            onChange={e => setPpg(e.target.value)}
                             className="input input-bordered input-primary input-sm w-full"
                         />
                     </div>

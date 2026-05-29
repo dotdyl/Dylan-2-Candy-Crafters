@@ -1,3 +1,8 @@
+// Citation for the following module:
+// Date: 05/38/2026
+// Based on:
+// Source URL: https://canvas.oregonstate.edu/courses/2042369/assignments/10464666?module_item_id=26640209
+
 const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv')

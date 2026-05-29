@@ -8,7 +8,7 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
     const [gallonsFilled, setGallonsFilled] = useState(0.0)
 
     const autofill = () => {
-        
+
         if (Object.keys(updateInventory).length !== 0){
             const matchCandy = candies.filter(c => {
             const candyId = c.candyId
@@ -22,7 +22,11 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
             } else {
                 setLastStocked(new Date(undefined))
             }
-            setiCandy(matchCandy)
+            if (matchCandy){
+              setiCandy(matchCandy)
+            } else {
+              setiCandy(null);
+            }
             setGallonsFilled(updateInventory.gallonsFilled)
         }
     }
@@ -38,7 +42,7 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
                 <div className="flex-shrink-0 lg:mb-3">
                     <h2 className="text-lg font-bold text-base-content">Update an Inventory Space</h2>
                 </div>
-                
+
                 <form className="flex flex-wrap items-end gap-6" onSubmit={e => {e.preventDefault()}}>
                     <div className="form-control w-full max-w-[250px]">
                         <label htmlFor="updateInventoryById" className="label py-1">
@@ -59,7 +63,7 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
                             <span className="label-text font-semibold text-xs">Candy to Update</span>
                         </label>
                         <select name="updateCandyById" id="updateCandyById" className="select select-bordered select-primary select-sm w-full" value={JSON.stringify(icandy)} onChange={e => {setiCandy(JSON.parse(e.target.value))}}>
-                            <option value={JSON.stringify(icandy)}>-- Optionally choose a candy --</option>
+                            <option value={JSON.stringify(null)}>-- Optionally choose a candy --</option>
                             {candies.map((candy) => (
                                 <option key={candy.candyId} value={JSON.stringify(candy)}>
                                     {candy.candyId} - {candy.candyName}

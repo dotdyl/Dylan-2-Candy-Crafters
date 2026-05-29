@@ -1,3 +1,8 @@
+// Citation for the following module:
+// Date: 05/28/2026
+// Based on:
+// Source URL: https://canvas.oregonstate.edu/courses/2042369/assignments/10464666?module_item_id=26640209
+
 const CreateCandyForm = ({ backendURL, refreshPeople }) => {
     return (
         // max-w-5xl gives it a wider container to fit all inputs smoothly in a line
