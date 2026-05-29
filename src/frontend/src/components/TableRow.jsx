@@ -9,7 +9,7 @@ const TableRow = ({ rowObject, backendURL, refreshPeople, onDelete }) => {
             ))}
 
             <td>
-                <DeleteButton onDelete={onDelete} />
+              <DeleteButton onDelete={onDelete} rowObject={rowObject}/>
             </td>
         </tr>
     );

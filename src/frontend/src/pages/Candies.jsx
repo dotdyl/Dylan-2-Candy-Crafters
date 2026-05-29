@@ -9,8 +9,6 @@ function Candies({ backendURL }) {
 
     // Set up a state variable `people` to store and display the backend response
     const [candies, setCandies] = useState([]);
-    const [homeworlds, setHomeworlds] = useState([]);
-
 
     const getData = async function () {
         try {
@@ -27,8 +25,20 @@ function Candies({ backendURL }) {
             // If the API call fails, print the error to the console
             console.log(error);
         }
-
     };
+
+    const onDelete = async (id) => {
+      try {
+        const response = await fetch(backendURL + `/candies-delete/${id}`, {method: 'DELETE'});
+        if (response.status == 200) {
+          setCandies(candies.filter(e => {
+            console.log(e);
+            return e.candyId !== id;}));
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
     // Load table on page load
     useEffect(() => {
@@ -53,7 +63,7 @@ function Candies({ backendURL }) {
 
                     <tbody>
                         {candies.map((candy, index) => (
-                            <TableRow key={index} rowObject={candy} backendURL={backendURL} refreshCandy={getData} />
+                            <TableRow key={index} rowObject={candy} backendURL={backendURL} refreshCandy={getData} onDelete={onDelete} />
                         ))}
 
                     </tbody>

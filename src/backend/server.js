@@ -17,7 +17,6 @@ app.get('/load', async (req, res) => {
         //TODO: implement query req to db and return as above to frontend
         const query1 = 'CALL sp_load_candy_db();';
         const response = await db.query(query1);
-        console.log("YES");
         res.status(200).send("success"); //send results to frontend
 
     }
@@ -34,6 +33,20 @@ app.get('/candies', async (req, res) => {
         const query1 = 'SELECT * FROM Candies;';
         const [candies] = await db.query(query1);
         res.status(200).json({ candies }); //send results to frontend
+    }
+    catch (error) {
+        console.error("Error executing queries:", error);
+        // Send a generic error message to the browser
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
+});
+
+app.delete('/candies-delete/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const query = `CALL sp_delete_candy_from_id(${id})`;
+        const response = await db.query(query);
+        res.status(200).json("candy deleted"); //send results to frontend
     }
     catch (error) {
         console.error("Error executing queries:", error);
@@ -64,7 +77,7 @@ app.get('/inventory', async (req, res) => {
         const query2 = 'SELECT * FROM Candies;';
         const [inventorySpaces] = await db.query(query1);
         const [candies] = await db.query(query2)
-        
+
         res.status(200).json({ inventorySpaces, candies }); //send results to frontend
     }
     catch (error) {
