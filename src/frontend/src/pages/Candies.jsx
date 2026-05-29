@@ -37,25 +37,29 @@ function Candies({ backendURL }) {
 
     return (
         <>
-            <h1>All Candies</h1>
+            <div className='card bg-base-100 max-w-full border border-base-300 shadow-md'>
+                <div className='card-body'>
+                <h1 className='text-xl font-bold text-base-content'>All Candies</h1>
 
-            <table>
-                <thead>
-                    <tr>
-                        {candies.length > 0 && Object.keys(candies[0]).map((header, index) => (
-                            <th key={index}>{header}</th>
+                <table className='table table-zebra'>
+                    <thead className='text-base text-primary'>
+                        <tr>
+                            {candies.length > 0 && Object.keys(candies[0]).map((header, index) => (
+                                <th key={index}>{header}</th>
+                            ))}
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {candies.map((candy, index) => (
+                            <TableRow key={index} rowObject={candy} backendURL={backendURL} refreshCandy={getData} />
                         ))}
-                        <th></th>
-                    </tr>
-                </thead>
 
-                <tbody>
-                    {candies.map((candy, index) => (
-                        <TableRow key={index} rowObject={candy} backendURL={backendURL} refreshCandy={getData} />
-                    ))}
-
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+                </div>
+            </div>
 
             <CreateCandyForm></CreateCandyForm>
             <UpdateCandyForm candies={candies}></UpdateCandyForm>

@@ -54,7 +54,7 @@ function App() {
                 <div className="card bg-base-100 shadow-xl min-h-[calc(100vh-8rem)]">
                     <div className="card-body p-6 sm:p-10">
                         <Routes>
-                            <Route path="/" element={<Home />} />
+                            <Route path="/" element={<Home backendURL={backendURL} />} />
                             <Route path="/candies" element={<Candies backendURL={backendURL} />} />
                             <Route path="/orders" element={<Orders backendURL={backendURL} />} />
                             <Route path="/inventory" element={<InventorySpaces backendURL={backendURL} />} />

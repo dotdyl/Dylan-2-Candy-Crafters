@@ -37,11 +37,13 @@ function InventorySpaces({ backendURL }) {
 
     return (
         <>
-            <h1>All InventorySpaces</h1>
+            <div className='card bg-base-100 max-w-full border border-base-300 shadow-md'>
+                <div className='card-body'>
+                <h1 className='text-xl font-bold text-base-content'>All InventorySpaces</h1>
 
-            <table>
-                <thead>
-                    <tr>
+                <table className='table table-zebra'>
+                    <thead className='text-base text-primary'>
+                        <tr>
                         {inventorySpaces.length > 0 && Object.keys(inventorySpaces[0]).map((header, index) => (
                             <th key={index}>{header}</th>
                         ))}
@@ -78,8 +80,10 @@ function InventorySpaces({ backendURL }) {
                         <TableRow key={index} rowObject={rowObject} backendURL={backendURL} refreshCandy={getData} />
                     )})}
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+                </div>
+            </div>
 
             <CreateInventorySpaceForm candies={candies}></CreateInventorySpaceForm>
             <UpdateInventorySpaceForm inventorySpaces={inventorySpaces} candies={candies}></UpdateInventorySpaceForm>

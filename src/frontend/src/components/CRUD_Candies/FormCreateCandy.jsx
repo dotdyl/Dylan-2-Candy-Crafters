@@ -1,12 +1,12 @@
 const CreateCandyForm = ({ backendURL, refreshPeople }) => {
     return (
         // max-w-5xl gives it a wider container to fit all inputs smoothly in a line
-        <div className="card bg-base-100 max-w-full border border-base-200 shadow-md">
-            <div className="card-body p-4 sm:p-6">
+        <div className="card bg-base-100 max-w-full border border-base-300 shadow-md">
+            <div className="card-body p-4">
                   
                 {/*Main Heading - just standalone*/}
                 <div className="lg:mb-3 flex-shrink-0">
-                    <h2 className="text-lg font-bold text-base-content flex items-center gap-1">
+                    <h2 className="text-lg font-bold text-base-content">
                     Create Candy
                     </h2>
                 </div>
