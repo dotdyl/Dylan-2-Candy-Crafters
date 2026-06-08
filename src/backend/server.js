@@ -61,6 +61,16 @@ app.delete('/candies-delete/:id', async (req, res) => {
     }
 });
 
+app.post('/candies'), async (req, res) => {
+    try{
+        //todo: db work 
+    }
+    catch (error){
+        console.log("Error executing query:", error);
+        res.status(500).send("An error occured while executing the database queries.");
+    }
+}
+
 
 app.get('/vendors', async (req, res) => {
     try {
