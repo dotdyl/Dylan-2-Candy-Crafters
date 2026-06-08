@@ -42,7 +42,7 @@ app.get('/candies', async (req, res) => {
     }
 });
 
-app.delete('/candies-delete/:id', async (req, res) => {
+app.delete('/candies/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const query = `CALL sp_delete_candy_from_id(${id})`;
@@ -50,6 +50,25 @@ app.delete('/candies-delete/:id', async (req, res) => {
         const result = response[0][0][0].result
         console.log(result);
         if (result != 'Candy deleted'){
+          res.status(400).json(result);
+        } else {
+          res.status(200).json(result);
+        }
+    }
+    catch (error) {
+        console.error("Error executing queries:", error);
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
+});
+
+app.delete('/orderDetails/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const query = `CALL sp_delete_order_detail_from_id(${id})`;
+        const response = await db.query(query);
+        const result = response[0][0][0].result
+        console.log(result);
+        if (result != 'Order Detail Deleted.'){
           res.status(400).json(result);
         } else {
           res.status(200).json(result);
@@ -108,6 +127,30 @@ app.get('/orders', async (req, res) => {
     }
 });
 
+app.put('/orderDetails', async (req, res) => {
+    try {
+        const body = req.body
+        console.log("Body: ", body)
+        const orderDetailsId = body.orderDetailsId
+        const orderId = body.orderId
+        const candyId = body.candyId
+        const orderWeightLbs = body.orderWeightLbs
+        const unitPricePerLb = body.unitPricePerLb
+        const lineTotal = body.lineTotal
+        const query = `CALL sp_update_order_detail_from_id(${orderDetailsId}, ${orderId}, ${candyId}, ${orderWeightLbs}, ${unitPricePerLb}, ${lineTotal})`
+        const response = await db.query(query)
+        const result = response[0][0][0].result
+        console.log(result)
+        if (result != 'Updated Order Detail.'){
+          res.status(400).json(result);
+        } else {
+          res.status(200).json(result);
+        }
+    } catch (error) {
+        console.error("Error executing queries:", error);
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
+})
 
 app.listen(PORT, function () {
     console.log('Express started on http://classwork.engr.oregonstate.edu:' + PORT + '; press Ctrl-C to terminate.');

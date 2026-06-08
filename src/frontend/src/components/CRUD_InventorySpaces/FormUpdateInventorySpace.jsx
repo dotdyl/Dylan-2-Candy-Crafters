@@ -49,7 +49,7 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
                             <span className="label-text font-semibold text-xs">Inventory Space to Update</span>
                         </label>
                         <select name="updateInventoryById" id="updateInventoryById" className="select select-bordered select-primary select-sm w-full" defaultValue="" onChange={e => {setUpdatedInventory(JSON.parse(e.target.value))}}>
-                            <option value="">Select an Inventory Space</option>
+                            <option value="" disabled hidden>Select an Inventory Space</option>
                             {inventorySpaces.map((space) => (
                                 <option key={space.inventoryId} value={JSON.stringify(space)}>
                                     {space.inventoryId}

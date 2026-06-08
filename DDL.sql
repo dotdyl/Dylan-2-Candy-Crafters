@@ -67,11 +67,9 @@ BEGIN
   CREATE OR REPLACE TABLE `Orders` (
     `orderId` int(11) NOT NULL AUTO_INCREMENT,
     `vendorId` int(11) NOT NULL DEFAULT -99,
-    `subTotal` decimal(19,2) NOT NULL,
-    `taxAmtOfTotal` decimal(19,2) NOT NULL,
+    `taxPctOfTotal` decimal(19,2) NOT NULL,
     `shippingCost` decimal(19,2) NOT NULL,
     `orderDate` datetime NOT NULL,
-    `totalDue` decimal(19,2) NOT NULL,
     PRIMARY KEY (`orderId`),
     FOREIGN KEY (`vendorId`) REFERENCES `Vendors` (`vendorId`) ON DELETE SET DEFAULT -- Sets the FK value to default, and we preserve the table record so revenue and finances can be tracked still
   );
@@ -80,10 +78,10 @@ BEGIN
   -- Dumping data for table `orders`
   --
 
-  INSERT INTO `Orders` (`vendorId`, `subTotal`, `taxAmtOfTotal`, `shippingCost`, `orderDate`, `totalDue`) VALUES
-  ((SELECT vendorId FROM Vendors WHERE vendorName = 'Candy Plaza'), 4000.00, 0.00, 90.00, '2026-05-01 09:15:00', 4090.00),
-  ((SELECT vendorId FROM Vendors WHERE vendorName = 'Candy Plaza'), 12000.00, 0.00, 300.00, '2026-05-02 13:42:00', 12300.00),
-  ((SELECT vendorId FROM Vendors WHERE vendorName = 'Silly Billys Candies'), 9000.00, 0.00, 120.00, '2026-05-03 10:05:00', 9120.00);
+  INSERT INTO `Orders` (`vendorId`, `taxPctOfTotal`, `shippingCost`, `orderDate`) VALUES
+  ((SELECT vendorId FROM Vendors WHERE vendorName = 'Candy Plaza'), 0.00, 90.00, '2026-05-01 09:15:00'),
+  ((SELECT vendorId FROM Vendors WHERE vendorName = 'Candy Plaza'), 0.00, 300.00, '2026-05-02 13:42:00'),
+  ((SELECT vendorId FROM Vendors WHERE vendorName = 'Silly Billys Candies'), 0.00, 120.00, '2026-05-03 10:05:00');
 
   --
   -- Table structure for table `orderDetails`
