@@ -4,7 +4,7 @@ const ResetButton = ({backendURL}) => {
         const response = await fetch(backendURL+"/load")
     };
     return(
-        <button className="btn btn-primary" onClick={onReset}>
+        <button className="btn btn-secondary bg-red-700 border-red-700 italic font-bold" onClick={onReset}>
             Reset
         </button>
     );
