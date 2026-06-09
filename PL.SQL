@@ -1,3 +1,7 @@
+-- Citation for the following module:
+-- Date: 06/8/2026
+-- Based on: OSU Modules on PL/SQL, no AI was used directly for code generation.
+-- Source URL: https://canvas.oregonstate.edu/courses/2042369/pages/exploration-pl-slash-sql-part-2-stored-procedures-for-cud?module_item_id=26640199
 
 DROP PROCEDURE IF EXISTS sp_delete_candy_from_id;
 DELIMITER //

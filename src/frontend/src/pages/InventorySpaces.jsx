@@ -1,3 +1,8 @@
+// Citation for the following module:
+// Date: 06/08/2026
+// Based on: Structure of GET requests calling in "getData()", OSU CS340 Pages
+// Source URL: https://canvas.oregonstate.edu/courses/2042369/pages/exploration-web-application-technology-2?module_item_id=26640188
+
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRow from '../components/TableRow';
 import CreateInventorySpaceForm from '../components/CRUD_InventorySpaces/FormCreateInventorySpace';
@@ -7,7 +12,7 @@ import UpdateInventorySpaceForm from '../components/CRUD_InventorySpaces/FormUpd
 
 function InventorySpaces({ backendURL }) {
 
-    // Set up a state variable `people` to store and display the backend response
+    // Set up state variables
     const [inventorySpaces, setInventorySpaces] = useState([]);
     const [candies, setCandies] = useState([]);
 
@@ -19,7 +24,7 @@ function InventorySpaces({ backendURL }) {
             // Convert the response into JSON format
             const { inventorySpaces, candies } = await response.json();
 
-            // Update the people state with the response data
+            // Update the inventorySpaces state with the response data
             setInventorySpaces(inventorySpaces);
             setCandies(candies);
 

@@ -1,7 +1,7 @@
 // Citation for the following module:
 // Date: 05/28/2026
-// Based on:
-// Source URL: https://canvas.oregonstate.edu/courses/2042369/assignments/10464666?module_item_id=26640209
+// Based on: OSU CS340 Pages on basic React Setup. 
+// Source URL: https://canvas.oregonstate.edu/courses/2042369/pages/exploration-web-application-technology-2?module_item_id=26640188
 
 const db = require('./database/db-connector');
 const express = require('express');

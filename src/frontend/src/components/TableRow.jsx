@@ -1,11 +1,11 @@
 // Citation for the following module:
-// Date: 05/28/2026
+// Date: 06/08/2026
 // Adapted/Copied from:
-// Source URL: https://canvas.oregonstate.edu/courses/2042369/assignments/10464666?module_item_id=26640209
+// Source URL: https://canvas.oregonstate.edu/courses/2042369/pages/exploration-web-application-technology-2?module_item_id=26640188
 
 import DeleteButton from './ButtonDelete';
 
-const TableRow = ({ rowObject, backendURL, refreshPeople, onDelete, noDeleteButton }) => {
+const TableRow = ({ rowObject, backendURL, onDelete, noDeleteButton }) => {
 
     return (
         <tr>

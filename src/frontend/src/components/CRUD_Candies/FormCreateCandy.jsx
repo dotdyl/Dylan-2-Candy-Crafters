@@ -1,7 +1,12 @@
 // Citation for the following module:
 // Date: 05/28/2026
-// Based on:
-// Source URL: https://canvas.oregonstate.edu/courses/2042369/assignments/10464666?module_item_id=26640209
+// Based on: Structure of POST requests calling in "submitCandy()", OSU CS340 Pages
+// Source URL: https://canvas.oregonstate.edu/courses/2042369/pages/exploration-web-application-technology-2?module_item_id=26640188 
+
+// Citation for the following module:
+// Date: 06/08/2026
+// Based on: AI assistance for use of daisyUI components, mostly own work, some comments and structure copied. 
+// Source URL: https://gemini.google.com/  
 
 import { useState } from "react";
 

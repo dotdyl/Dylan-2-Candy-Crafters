@@ -1,6 +1,7 @@
-/*
-https://v4.daisyui.com/components/modal/
-*/
+// Citation for the following module:
+// Date: 06/08/2026
+// Based on: Confirmation Modal Component Template
+// Source URL: https://v4.daisyui.com/components/modal/
 
 import { useRef } from "react";
 

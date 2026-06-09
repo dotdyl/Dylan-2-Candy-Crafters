@@ -1,3 +1,8 @@
+// Citation for the following module:
+// Date: 06/08/2026
+// Based on: Structure of PUT requests calling in "submitData()" etc., OSU CS340 Pages
+// Source URL: https://canvas.oregonstate.edu/courses/2042369/pages/exploration-web-application-technology-2?module_item_id=26640188 
+
 import { useEffect, useState } from "react";
 
 const blankOrderDetail = {
@@ -20,7 +25,6 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders, get
 
     const submitUpdate = async () => {
         try {
-            console.log("bleh")
             const body = {
                     "orderDetailsId": updateOrderDetail.orderDetailsId, 
                     "orderId": order.orderId,
@@ -29,7 +33,6 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders, get
                     "orderWeightLbs": owp,
                     "lineTotal": lt
                 }
-            console.log(body)
             const response = await fetch( backendURL + "/orderDetails", {
                 method: "PUT",
                 headers: {
@@ -38,7 +41,6 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders, get
                 body: JSON.stringify(body)
             })
             if (response.status == 200) {
-                console.log("yay!")
                 getData()
             } else {
                 const text = await response.json()

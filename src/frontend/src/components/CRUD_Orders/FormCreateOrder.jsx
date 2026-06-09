@@ -3,8 +3,7 @@ import { createRoot } from "react-dom/client"
 import CreateOrderDetailForm from "./FormCreateOrderDetail";
 
 const CreateOrderForm = ({ vendors, candies, backendURL, orders}) => {
-    // Placeholder values for the read-only fields
-    // In a real app, these would be variables or state like {calculatedSubtotal}
+    
     const placeholderValue = 0;
     const currentDate = new Date().toISOString().split('Z')[0]; // YYYY-MM-DD format
 
@@ -15,16 +14,6 @@ const CreateOrderForm = ({ vendors, candies, backendURL, orders}) => {
     const [taxPct, setTaxPct] = useState(0.0)
     const [taxAmt, setTaxAmt] = useState(0.0)
     const [totalDue, setTotalDue] = useState(0.0)
-
-    const addOrder = async () => {
-
-        const response = await fetch(backendURL + '/bsg-people', {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: {/*Need to structure a json object that will get sent here*/}
-        })
-
-    }
 
     const addMore = () => {
 

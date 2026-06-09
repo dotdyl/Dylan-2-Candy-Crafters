@@ -1,3 +1,8 @@
+// Citation for the following module:
+// Date: 06/08/2026
+// Based on: Structure of GET requests calling in "getData()", OSU CS340 Pages
+// Source URL: https://canvas.oregonstate.edu/courses/2042369/pages/exploration-web-application-technology-2?module_item_id=26640188
+
 import { useState, useEffect } from "react"; // Importing useState for managing state in the component
 import TableRow from "../components/TableRow";
 import CreateOrderForm from "../components/CRUD_Orders/FormCreateOrder";
@@ -69,7 +74,6 @@ function Orders({ backendURL }) {
                         </thead>
 
                         <tbody>
-                            {/*Use '...' to SPREAD the detail OBJ across its pieces/subfields, one of these is candyID, we now can change it dynamically.*/}
                             {orders.map((order, index) => (
                                 <TableRow
                                     key={index}
@@ -127,14 +131,6 @@ function Orders({ backendURL }) {
                 </div>
             </div>}
             <CreateOrderForm backendURL={backendURL} vendors={vendors} candies={candies} orders={orders}></CreateOrderForm>
-            {/*Not necessary, probably, but the form was made: <UpdateOrderForm vendors={vendors} candies={candies} orders={orders} orderDetails={orderDetails}></UpdateOrderForm>*/
-            /*
-              <div className="mt-4 mb-2 ml-1">
-                <h2 className="text-lg font-bold text-base-content">Create an Order Detail</h2>
-            </div>
-            <CreateOrderDetailForm candies={candies} orders={orders}></CreateOrderDetailForm>
-            <UpdateOrderDetailForm candies={candies} orderDetails={orderDetails} orders={orders} />
-            */}
             <UpdateOrderDetailForm backendURL={backendURL} candies={candies} orderDetails={orderDetails} orders={orders} getData={getData}/>
         </>
     );

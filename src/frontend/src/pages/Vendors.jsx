@@ -1,3 +1,9 @@
+// Citation for the following module:
+// Date: 06/08/2026
+// Based on: Structure of GET requests calling in "getData()", OSU CS340 Pages
+// Source URL: https://canvas.oregonstate.edu/courses/2042369/pages/exploration-web-application-technology-2?module_item_id=26640188
+
+
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRow from '../components/TableRow';
 import CreateVendorForm from '../components/CRUD_Vendors/FormCreateVendor';
@@ -18,7 +24,7 @@ function Vendors({ backendURL }) {
             // Convert the response into JSON format
             const { vendors } = await response.json();
 
-            // Update the people state with the response data
+            // Update the vendors state with the response data
             setVendors(vendors);
 
         } catch (error) {
@@ -51,7 +57,7 @@ function Vendors({ backendURL }) {
 
                         <tbody>
                             {vendors.map((candy, index) => (
-                                <TableRow key={index} rowObject={candy} backendURL={backendURL} refreshCandy={getData} />
+                                <TableRow key={index} rowObject={candy} backendURL={backendURL}/>
                             ))}
 
                         </tbody>

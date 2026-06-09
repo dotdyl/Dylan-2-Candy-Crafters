@@ -1,7 +1,7 @@
 // Citation for the following module:
-// Date: 05/28/2026
-// Based on:
-// Source URL: https://canvas.oregonstate.edu/courses/2042369/assignments/10464666?module_item_id=26640209
+// Date: 06/08/2026
+// Based on: Structure of GET requests calling in "getData()" etc. - OSU CS340 Pages
+// Source URL: https://canvas.oregonstate.edu/courses/2042369/pages/exploration-web-application-technology-2?module_item_id=26640188
 
 import { useState, useEffect } from 'react';  // Importing useState for managing state in the component
 import TableRow from '../components/TableRow';
@@ -11,6 +11,7 @@ import UpdateCandyForm from '../components/CRUD_Candies/FormUpdateCandy';
 
 function Candies({ backendURL }) {
 
+    //candies state var
     const [candies, setCandies] = useState([]);
 
     const getData = async function () {
@@ -21,7 +22,7 @@ function Candies({ backendURL }) {
             // Convert the response into JSON format
             const { candies } = await response.json();
 
-            // Update the people state with the response data
+            // Update the candy state with the response data
             setCandies(candies);
 
         } catch (error) {
