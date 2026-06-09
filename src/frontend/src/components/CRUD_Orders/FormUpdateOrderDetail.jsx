@@ -8,7 +8,7 @@ const blankOrderDetail = {
     "lineTotal": 0.0
 }
 
-const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) => {
+const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders, getData }) => {
 
     const [updateOrderDetail, setUpdatedOrderDetail] = useState({blankOrderDetail})
 
@@ -39,6 +39,7 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) =
             })
             if (response.status == 200) {
                 console.log("yay!")
+                getData()
             } else {
                 const text = await response.json()
                 alert(text)
@@ -84,7 +85,10 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) =
     }, [updateOrderDetail])
 
     useEffect(() => {
-        if (icandy != undefined) setUpp(icandy.pricePerLb)
+        if (icandy != undefined) {
+            setUpp(icandy.pricePerLb);
+            setLt(owp * icandy.pricePerLb)
+        }
     }, [icandy])
 
     return (

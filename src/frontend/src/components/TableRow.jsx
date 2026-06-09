@@ -5,7 +5,7 @@
 
 import DeleteButton from './ButtonDelete';
 
-const TableRow = ({ rowObject, backendURL, refreshPeople, onDelete }) => {
+const TableRow = ({ rowObject, backendURL, refreshPeople, onDelete, noDeleteButton }) => {
 
     return (
         <tr>
@@ -13,9 +13,11 @@ const TableRow = ({ rowObject, backendURL, refreshPeople, onDelete }) => {
                 <td key={index}>{value}</td>
             ))}
 
-            <td>
-              <DeleteButton onDelete={onDelete} rowObject={rowObject}/>
-            </td>
+            {!noDeleteButton && 
+                <td>
+                <DeleteButton onDelete={onDelete} rowObject={rowObject}/>
+                </td>
+            }
         </tr>
     );
 };

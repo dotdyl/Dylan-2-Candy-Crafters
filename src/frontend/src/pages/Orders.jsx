@@ -33,8 +33,7 @@ function Orders({ backendURL }) {
       try {
         const response = await fetch(backendURL + `/orderDetails/${id}`, {method: 'DELETE'});
         if (response.status == 200) {
-          setOrderDetails(orderDetails.filter(e => {
-            return e.orderDetailsId !== id;}));
+            getData();
         } else {
             const text = await response.json()
             alert(text)
@@ -72,10 +71,7 @@ function Orders({ backendURL }) {
                             {orders.map((order, index) => (
                                 <TableRow
                                     key={index}
-                                    rowObject={{
-                                        ...order,
-                                        vendorId: `${order.vendorId} - ${vendors.find(v => v.vendorId === order.vendorId)?.vendorName || 'Unknown'}`
-                                    }}
+                                    rowObject={order}
                                     backendURL={backendURL}
                                     refreshOrders={getData}
                                 />
@@ -126,7 +122,7 @@ function Orders({ backendURL }) {
             <CreateOrderDetailForm candies={candies} orders={orders}></CreateOrderDetailForm>
             <UpdateOrderDetailForm candies={candies} orderDetails={orderDetails} orders={orders} />
             */}
-            <UpdateOrderDetailForm backendURL={backendURL} candies={candies} orderDetails={orderDetails} orders={orders} />
+            <UpdateOrderDetailForm backendURL={backendURL} candies={candies} orderDetails={orderDetails} orders={orders} getData={getData}/>
         </>
     );
 }

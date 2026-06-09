@@ -7,6 +7,34 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
     const [lastStocked, setLastStocked] = useState()
     const [gallonsFilled, setGallonsFilled] = useState(0.0)
 
+    const submitUpdate = async () => {
+        try {
+            console.log("bleh")
+            const body = {
+                    "inventoryOd": updateInventory.inventoryId,
+                    "candyId": icandy.candyId,
+                    "gallonsFilled": gallonsFilled,
+                    "lastStocked": lastStocked
+                }
+            console.log(body)
+            const response = await fetch( backendURL + "/inventory", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+            if (response.status == 200) {
+                console.log("yay!")
+            } else {
+                const text = await response.json()
+                alert(text)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const autofill = () => {
 
         if (Object.keys(updateInventory).length !== 0){
@@ -101,7 +129,7 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
                     </div>
 
                     <div className="flex-shrink-0 lg:mb-0.5">
-                        <button type="submit" className="btn btn-primary btn-sm px-6 w-full lg:w-auto">Update</button>
+                        <button type="submit" className="btn btn-primary btn-sm px-6 w-full lg:w-auto" onClick={e => {submitUpdate()}}>Update</button>
                     </div>
                 </form>
             </div>

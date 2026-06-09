@@ -57,7 +57,10 @@ export default function CreateOrderDetailForm({candies, index, setDetails, order
     }
 
     const onDelete = () => {
-        if (setDetails) setDetails(d => d.filter((d, i) => (i !== index)))
+        if (setDetails) {
+            console.log(index)
+            setDetails(d => d.filter((d, i) => (i !== index)))
+        }
     }
 
     const handleCandyAdd = (value) => {
@@ -160,9 +163,10 @@ export default function CreateOrderDetailForm({candies, index, setDetails, order
             </div>
 
             <div className="flex-shrink-0 lg:mb-0.5">
-                {!orders &&
-                    <DeleteButton onDelete={onDelete} ></DeleteButton>
-                }
+                    <button className="btn btn-error border-[#d3493f] bg-[#d3493f] btn-sm" onClick={e => {e.preventDefault(); onDelete()}}>
+                        Delete
+                    </button>
+                
 
                 {orders &&
                     <button type="submit" value="Submit Order" className="btn btn-primary btn-sm px-6 w-full lg:w-auto">Add</button>

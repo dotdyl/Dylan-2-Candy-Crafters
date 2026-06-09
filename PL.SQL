@@ -32,6 +32,8 @@ DELIMITER //
 CREATE PROCEDURE sp_delete_order_detail_from_id(IN in_orderDetailsId INT)
 BEGIN
 
+	DECLARE d_orderId INT;
+
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
 		ROLLBACK;
@@ -42,7 +44,15 @@ BEGIN
 
 	IF EXISTS (SELECT 1 FROM OrderDetails WHERE orderDetailsId = in_orderDetailsId) THEN
 
+		SELECT orderId INTO d_orderId FROM OrderDetails WHERE orderDetailsId = in_orderDetailsId;
+
 		DELETE FROM OrderDetails WHERE orderDetailsId = in_orderDetailsId;
+
+		IF NOT EXISTS (SELECT 1 FROM OrderDetails WHERE orderId = d_orderId) THEN
+		
+			DELETE FROM Orders WHERE orderId = d_orderId;
+
+		END IF;
 
 		COMMIT;
 
@@ -164,19 +174,32 @@ DROP VIEW IF EXISTS v_orders;
 CREATE VIEW v_orders AS
 SELECT
 	o.orderId,
-	v.vendorName,
+	COALESCE(CONCAT(v.vendorId, ' - ', v.vendorName), "Unknown") as vendorId,
 	SUM(od.lineTotal) as subTotal,
 	o.taxPctOfTotal,
 	o.shippingCost,
-	o.orderDate,
-	(o.taxPctOfTotal * SUM(od.lineTotal)) + SUM(od.lineTotal) + o.shippingCost as totalDue
+	DATE_FORMAT(o.orderDate, '%Y-%m-%d %H:%i:%s') AS orderDate,
+	ROUND(SUM(od.lineTotal) * (1 + o.taxPctOfTotal) + o.shippingCost, 2) as totalDue
 FROM
 	Orders o
-JOIN
+LEFT JOIN
 	Vendors v on o.vendorId = v.vendorId
 JOIN
 	OrderDetails od on o.orderId = od.orderId
 GROUP BY
-	o.orderId
+	o.orderId,
+	COALESCE(CONCAT(v.vendorId, ' - ', v.vendorName), "Unknown")
 ORDER BY
-	o.orderId
+	o.orderId;
+
+DROP VIEW IF EXISTS v_inventorySpaces;
+CREATE VIEW v_inventorySpaces AS
+SELECT
+	i.inventoryId,
+	i.candyId,
+	i.gallonsFilled,
+	DATE_FORMAT(i.lastStocked, '%Y-%m-%d') AS lastStocked
+FROM
+	InventorySpaces i
+ORDER BY
+	i.inventoryId;
