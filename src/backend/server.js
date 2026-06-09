@@ -135,8 +135,14 @@ app.put('/inventory', async (req, res) => {
         const candyId = body.candyId
         const gallonsFilled = body.gallonsFilled
         const lastStocked = body.lastStocked
-        const query = `CALL sp_update_order_detail_from_id(${inventoryId}, ${candyId}, ${gallonsFilled}, ${lastStocked})`
-        const response = await db.query(query)
+        console.log(typeof(lastStocked))
+        const query = `CALL sp_update_inventory_space_from_id(?, ?, ?, ?)`
+        const response = await db.query(query, [
+            inventoryId,
+            candyId,
+            gallonsFilled,
+            lastStocked
+        ])
         const result = response[0][0][0].result
         console.log(result)
         if (result != 'Updated Inventory Space.'){
@@ -178,7 +184,7 @@ app.put('/orderDetails', async (req, res) => {
         const orderWeightLbs = body.orderWeightLbs
         const unitPricePerLb = body.unitPricePerLb
         const lineTotal = body.lineTotal
-        const query = `CALL sp_update_order_detail_from_id(${orderDetailsId}, ${orderId}, ${candyId}, ${orderWeightLbs}, ${unitPricePerLb}, ${lineTotal})`
+        const query = `CALL sp_update_order_detail_from_id(${orderDetailsId}, ${orderId}, ${candyId}, ${orderWeightLbs}, ${unitPricePerLb}, ${lineTotal});`
         const response = await db.query(query)
         const result = response[0][0][0].result
         console.log(result)

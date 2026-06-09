@@ -82,7 +82,7 @@ function InventorySpaces({ backendURL }) {
                         }
 
                         return (
-                        <TableRow key={index} rowObject={rowObject} backendURL={backendURL} refreshCandy={getData} noDeleteButton={true}/>
+                        <TableRow key={index} rowObject={rowObject} backendURL={backendURL} noDeleteButton={true}/>
                     )})}
 
                     </tbody>
@@ -91,7 +91,7 @@ function InventorySpaces({ backendURL }) {
             </div>
 
             <CreateInventorySpaceForm candies={candies}></CreateInventorySpaceForm>
-            <UpdateInventorySpaceForm inventorySpaces={inventorySpaces} candies={candies}></UpdateInventorySpaceForm>
+            <UpdateInventorySpaceForm inventorySpaces={inventorySpaces} candies={candies} backendURL={backendURL} getData={getData}></UpdateInventorySpaceForm>
         </>
     )
 } export default InventorySpaces;

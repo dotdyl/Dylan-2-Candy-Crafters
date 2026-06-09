@@ -1,11 +1,6 @@
-// Citation for the following module:
-// Date: 06/08/2026
-// Based on: Structure of PUT requests calling in "submitUpdate()", OSU CS340 Pages
-// Source URL: https://canvas.oregonstate.edu/courses/2042369/pages/exploration-web-application-technology-2?module_item_id=26640188 
-
 import { useEffect, useState } from "react";
 
-const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
+const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces, getData }) => {
 
     const [updateInventory, setUpdatedInventory] = useState({})
     const [icandy, setiCandy] = useState({})
@@ -14,14 +9,15 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
 
     const submitUpdate = async () => {
         try {
+            console.log("bleh")
             const body = {
-                    "inventoryOd": updateInventory.inventoryId,
+                    "inventoryId": updateInventory.inventoryId,
                     "candyId": icandy.candyId,
                     "gallonsFilled": gallonsFilled,
                     "lastStocked": lastStocked
                 }
             console.log(body)
-            const response = await fetch( backendURL + "/inventory", {
+            const response = await fetch(backendURL + "/inventory", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
@@ -29,6 +25,7 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
                 body: JSON.stringify(body)
             })
             if (response.status == 200) {
+                getData()
             } else {
                 const text = await response.json()
                 alert(text)

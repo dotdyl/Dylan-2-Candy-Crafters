@@ -98,7 +98,7 @@ BEGIN
 
 		UPDATE InventorySpaces
 		SET candyId = update_candyId,
-			lastStocked = in_lastStocked,
+			lastStocked = CAST(in_lastStocked AS DATE),
 			gallonsFilled = in_gallonsFilled
 		WHERE inventoryId = in_inventoryId;
 
