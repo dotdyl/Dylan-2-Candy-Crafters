@@ -15,14 +15,12 @@ const CreateCandyForm = ({ backendURL, refreshCandy }) => {
     //func to submit the new candy when "Add" is clicked
     const submitCandy = async () => {
         try {
-            console.log("bleh x2")
             const body = {
                     "candyName": candyName, 
                     "candyPricePerLb": candyPricePerLb,
                     "candyLbsPerGallon": candyLbsPerGallon
                 }
-            console.log(body)
-            const response = await fetch( backendURL + "/candies", {
+            const response = await fetch(backendURL + "/candies", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -30,7 +28,7 @@ const CreateCandyForm = ({ backendURL, refreshCandy }) => {
                 body: JSON.stringify(body)
             })
             if (response.status == 200) {
-                console.log("yay!")
+                refreshCandy()
             } else {
                 const text = await response.json()
                 alert(text)
@@ -99,13 +97,13 @@ const CreateCandyForm = ({ backendURL, refreshCandy }) => {
                                 id="createLbsPerGallon"
                                 placeholder="0"
                                 className="input input-bordered input-primary input-sm w-full" 
-                                onChange={event => setCandyLbsPerGallon(event.target.value)} //set state TODO 
+                                onChange={event => setCandyLbsPerGallon(event.target.value)} 
                             />
                         </div>
 
                         {/* Right Column: Submit Button row-aligned */}
                         <div className="flex-shrink-0 lg:mb-0.5">
-                            <button type="submit" className="btn btn-primary btn-sm px-6 w-full lg:w-auto" onClick={e => {e.preventDefault(); console.log("test")}}>
+                            <button type="submit" className="btn btn-primary btn-sm px-6 w-full lg:w-auto" onClick={event => {event.preventDefault(); submitCandy(); refreshCandy()}}>
                                 Add Candy
                             </button>
                         </div>  

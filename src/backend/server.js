@@ -61,15 +61,24 @@ app.delete('/candies-delete/:id', async (req, res) => {
     }
 });
 
-app.post('/candies'), async (req, res) => {
+//POST route for sending a new candy to DB.
+app.post('/candies', async (req, res) => {
     try{
-        //todo: db work 
+        //deconstruct the passed in body into unique local elements
+        const candyName = req.body.candyName;
+        const candyPricePerLb = req.body.candyPricePerLb;
+        const candyLbsPerGallon = req.body.candyLbsPerGallon;
+
+        //use our PL/SQL SP to handle db actions. 
+        const query1 = `CALL sp_create_candy('${candyName}', ${candyPricePerLb}, ${candyLbsPerGallon})`;
+        const response = await db.query(query1);
+        res.status(200).send("success");
     }
     catch (error){
         console.log("Error executing query:", error);
         res.status(500).send("An error occured while executing the database queries.");
     }
-}
+});
 
 
 app.get('/vendors', async (req, res) => {
