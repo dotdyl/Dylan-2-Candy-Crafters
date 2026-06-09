@@ -30,25 +30,41 @@ WHERE candyId = @candyIdINPUT;
 -- CRUD Orders
 
 -- add a new order using user-inputted values
-INSERT INTO Orders (vendorId, subTotal, taxAmtOfTotal, shippingCost, orderDate, totalDue)
-VALUES (@vendorIdINPUT, @subTotal, @taxAmt, @shipping, @orderDate, @totalDue);
+INSERT INTO Orders (vendorId, taxPctOfTotal, shippingCost, orderDate)
+VALUES (@vendorIdINPUT, @taxPct, @shipping, @orderDate);
 
 -- get all order data to display in the table, adding the vendor name to the displayed table
-SELECT Orders.orderId, CONCAT(Vendor.vendorId, ' - ', Vendor.vendorName), Orders.subTotal, Orders.taxAmtOfTotal, 
-Orders.shippingCost, Orders.orderDate, Orders.totalDue FROM Orders
-JOIN Vendors ON Orders.vendorId == Vendors.vendorId;
+SELECT
+	o.orderId,
+	COALESCE(CONCAT(v.vendorId, ' - ', v.vendorName), "Unknown") as vendorId,
+	SUM(od.lineTotal) as subTotal,
+	o.taxPctOfTotal,
+	o.shippingCost,
+	DATE_FORMAT(o.orderDate, '%Y-%m-%d %H:%i:%s') AS orderDate,
+	ROUND(SUM(od.lineTotal) * (1 + o.taxPctOfTotal) + o.shippingCost, 2) as totalDue
+FROM
+	Orders o
+LEFT JOIN
+	Vendors v on o.vendorId = v.vendorId
+JOIN
+	OrderDetails od on o.orderId = od.orderId
+GROUP BY
+	o.orderId,
+	COALESCE(CONCAT(v.vendorId, ' - ', v.vendorName), "Unknown")
+ORDER BY
+	o.orderId;
 
 -- update an order based on the user-inputted input (might not be used, since this update would not be ideal)
 UPDATE Orders
-SET vendorId = @vendorIdINPUT, subTotal = @subTotal, taxAmtOfTotal = @taxAmtOfTotal,
-shippingCost = @shippingCost, orderDate = @orderDate, totalDue = @totalDue
+SET vendorId = @vendorIdINPUT, taxPctOfTotal = @taxPctTotal,
+shippingCost = @shippingCost, orderDate = @orderDate
 WHERE orderId = @orderIdInput;
 
 -- delete an order based on the matching id
 DELETE FROM Orders
 WHERE orderId = @orderIdINPUT;
 
--- CURD OrderDetails
+-- CRUD OrderDetails
 
 INSERT INTO OrderDetails (orderId, candyId, orderWeightLbs, unitPricePerLb, lineTotal)
 VALUES (@orderIdINPUT, @candyIdINPUT, @orderWeightLbsINPUT, @unitPricePerLbINPUT, @lineTotalINPUT);
@@ -82,7 +98,7 @@ VALUES (@vendorNameINPUT, @addressLine1, @addressLine2, @city, @state, @postalCo
 
 -- get all vendor data, as well as their total ytdPurchases based on the sum of their order totals
 SELECT Vendors.vendorId, Vendors.vendorName, Vendors.addressLine1, Vendors.addressLine2, Vendors.city, 
-Vendors.state, Vendors.postalCode, SUM(Orders.totalDue) AS ytdPurchases
+Vendors.state, Vendors.postalCode
 FROM Vendors
 LEFT JOIN Orders ON Vendors.vendorId = Orders.vendorId
 GROUP BY Vendors.vendorId, Vendors.vendorName, Vendors.addressLine1, Vendors.addressLine2, Vendors.city, 
