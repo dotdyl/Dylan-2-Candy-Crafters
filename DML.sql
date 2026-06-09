@@ -35,7 +35,7 @@ VALUES (@vendorIdINPUT, @subTotal, @taxAmt, @shipping, @orderDate, @totalDue);
 
 -- get all order data to display in the table, adding the vendor name to the displayed table
 SELECT Orders.orderId, CONCAT(Vendor.vendorId, ' - ', Vendor.vendorName), Orders.subTotal, Orders.taxAmtOfTotal, 
-Orders.shippingCost, Orders.orderDate, Orders.totalDue, FROM Orders
+Orders.shippingCost, Orders.orderDate, Orders.totalDue FROM Orders
 JOIN Vendors ON Orders.vendorId == Vendors.vendorId;
 
 -- update an order based on the user-inputted input (might not be used, since this update would not be ideal)

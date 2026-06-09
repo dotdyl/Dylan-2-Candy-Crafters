@@ -203,3 +203,31 @@ FROM
 	InventorySpaces i
 ORDER BY
 	i.inventoryId;
+-- ** SP for creating candies **
+DROP PROCEDURE IF EXISTS sp_create_candy;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_create_candy(
+	IN in_candyName VARCHAR(50),
+	IN in_candyPricePerLb decimal(5,2),
+	IN in_lbsPerGallon decimal(19,2)
+)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		ROLLBACK;
+		SELECT 'Error, SQLEXCEPTION; Candy was not created.' AS result;
+	END;
+
+	START TRANSACTION;
+	
+		INSERT INTO Candies (candyName,pricePerLb,lbsPerGallon)
+		VALUES (in_candyName, in_candyPricePerLb, in_lbsPerGallon);
+
+	COMMIT;
+
+	SELECT 'Candy created successfully.' AS result;
+
+END //
+DELIMITER ;

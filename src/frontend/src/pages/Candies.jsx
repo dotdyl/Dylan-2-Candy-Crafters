@@ -68,7 +68,7 @@ function Candies({ backendURL }) {
 
                     <tbody>
                         {candies.map((candy, index) => (
-                            <TableRow key={index} rowObject={candy} backendURL={backendURL} refreshCandy={getData} onDelete={onDelete} />
+                            <TableRow key={'candy:'+ index} rowObject={candy} backendURL={backendURL} refreshCandy={getData} onDelete={onDelete} />
                         ))}
 
                     </tbody>
@@ -76,7 +76,7 @@ function Candies({ backendURL }) {
                 </div>
             </div>
 
-            <CreateCandyForm></CreateCandyForm>
+            <CreateCandyForm backendURL={backendURL} refreshCandy={getData}></CreateCandyForm>
             <UpdateCandyForm candies={candies}></UpdateCandyForm>
         </>
     )

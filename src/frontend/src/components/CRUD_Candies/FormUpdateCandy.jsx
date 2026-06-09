@@ -40,7 +40,7 @@ const UpdateCandyForm = ({ candies, backendURL, refreshCandy }) => {
                         <select className="select select-bordered select-primary select-sm w-full max-w-xs" defaultValue="-- Select a Candy --" name="updateCandyById" id="updateCandyById" onChange={e => {setUpdatedCandy(JSON.parse(e.target.value))}}>
                             <option disabled hidden value={null}>-- Select a Candy --</option>
                             {candies.map((candy) => (
-                                <option key={candy.id} value={JSON.stringify(candy)}>
+                                <option key={"candy-option:" + candy.candyId} value={JSON.stringify(candy)}>
                                     {candy.candyId} - {candy.candyName}
                                 </option>
                             ))}

@@ -3,7 +3,42 @@
 // Based on:
 // Source URL: https://canvas.oregonstate.edu/courses/2042369/assignments/10464666?module_item_id=26640209
 
-const CreateCandyForm = ({ backendURL, refreshPeople }) => {
+import { useState } from "react";
+
+const CreateCandyForm = ({ backendURL, refreshCandy }) => {
+
+    //state vars
+    const [candyName, setCandyName] = useState("")
+    const [candyPricePerLb, setCandyPricePerLb] = useState(0.0)
+    const [candyLbsPerGallon, setCandyLbsPerGallon] = useState(0.0)
+
+    //func to submit the new candy when "Add" is clicked
+    const submitCandy = async () => {
+        try {
+            const body = {
+                    "candyName": candyName, 
+                    "candyPricePerLb": candyPricePerLb,
+                    "candyLbsPerGallon": candyLbsPerGallon
+                }
+            const response = await fetch(backendURL + "/candies", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+            if (response.status == 200) {
+                refreshCandy()
+            } else {
+                const text = await response.json()
+                alert(text)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     return (
         // max-w-5xl gives it a wider container to fit all inputs smoothly in a line
         <div className="card bg-base-100 max-w-full border border-base-300 shadow-md">
@@ -31,6 +66,7 @@ const CreateCandyForm = ({ backendURL, refreshPeople }) => {
                                 id="createCandy"
                                 placeholder="e.g., Peppermint Swirl"
                                 className="input input-bordered input-primary input-sm w-full"
+                                onChange={event => setCandyName(event.target.value)} //set state 
                             />
                         </div>
 
@@ -46,6 +82,7 @@ const CreateCandyForm = ({ backendURL, refreshPeople }) => {
                                 placeholder="0.00"
                                 step="0.01"
                                 className="input input-bordered input-primary input-sm w-full"
+                                onChange={event => setCandyPricePerLb(event.target.value)} //set state 
                             />
                         </div>
 
@@ -59,16 +96,17 @@ const CreateCandyForm = ({ backendURL, refreshPeople }) => {
                                 name="createLbsPerGallon"
                                 id="createLbsPerGallon"
                                 placeholder="0"
-                                className="input input-bordered input-primary input-sm w-full"
+                                className="input input-bordered input-primary input-sm w-full" 
+                                onChange={event => setCandyLbsPerGallon(event.target.value)} 
                             />
                         </div>
 
                         {/* Right Column: Submit Button row-aligned */}
                         <div className="flex-shrink-0 lg:mb-0.5">
-                            <button type="submit" className="btn btn-primary btn-sm px-6 w-full lg:w-auto">
+                            <button type="submit" className="btn btn-primary btn-sm px-6 w-full lg:w-auto" onClick={event => {event.preventDefault(); submitCandy(); refreshCandy()}}>
                                 Add Candy
                             </button>
-                        </div>
+                        </div>  
                 </form>
             </div>
         </div>
