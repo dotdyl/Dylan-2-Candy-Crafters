@@ -6,7 +6,7 @@ function Home({backendURL}) {
         <div className='card bg-base-100 max-w-full border border-primary shadow-lg p-4'>
             <div className="homepageDescription">
                 <h1 className='text-xl font-bold text-center text-primary'>
-                    Dylan2 Candy Crafters | Internal Dashboard
+                    Dylan^2 Candy Crafters | Internal Dashboard
                 </h1>
                 <div label="mainBody" className="flex flex-col justify-center items-center">
                     <h3 className="text-md p-4 max-w-[690px] text-center">
