@@ -1,7 +1,7 @@
 # Dylan-2-Candy-Crafters
 
 # Site Pages for supporting CRUD [Create, Read, Update, Delete]
-- Home (no functionality as of now)
+- Home 
 - Candies
 - Orders
 - Inventory Spaces
