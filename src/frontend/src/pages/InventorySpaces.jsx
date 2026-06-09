@@ -72,12 +72,12 @@ function InventorySpaces({ backendURL }) {
                         const rowObject = {
                             "inventoryId": space.inventoryId, 
                             "candyId": candyCol, 
-                            "lastStocked": space.lastStocked, 
-                            "gallonsFilled": space.gallonsFilled
+                            "gallonsFilled": space.gallonsFilled,
+                            "lastStocked": space.lastStocked
                         }
 
                         return (
-                        <TableRow key={index} rowObject={rowObject} backendURL={backendURL} refreshCandy={getData} />
+                        <TableRow key={index} rowObject={rowObject} backendURL={backendURL} refreshCandy={getData} noDeleteButton={true}/>
                     )})}
 
                     </tbody>

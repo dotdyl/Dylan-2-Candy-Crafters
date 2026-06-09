@@ -8,7 +8,7 @@ const blankOrderDetail = {
     "lineTotal": 0.0
 }
 
-const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) => {
+const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders, getData }) => {
 
     const [updateOrderDetail, setUpdatedOrderDetail] = useState({blankOrderDetail})
 
@@ -17,6 +17,37 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) =
     const [owp, setOwp] = useState(0.0)
     const [lt, setLt] = useState(0.0)
     const [order, setOrder] = useState({})
+
+    const submitUpdate = async () => {
+        try {
+            console.log("bleh")
+            const body = {
+                    "orderDetailsId": updateOrderDetail.orderDetailsId, 
+                    "orderId": order.orderId,
+                    "candyId": icandy.candyId,
+                    "unitPricePerLb": upp,
+                    "orderWeightLbs": owp,
+                    "lineTotal": lt
+                }
+            console.log(body)
+            const response = await fetch( backendURL + "/orderDetails", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+            if (response.status == 200) {
+                console.log("yay!")
+                getData()
+            } else {
+                const text = await response.json()
+                alert(text)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const autofill = () => {
         
@@ -54,7 +85,10 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) =
     }, [updateOrderDetail])
 
     useEffect(() => {
-        if (icandy != undefined) setUpp(icandy.pricePerLb)
+        if (icandy != undefined) {
+            setUpp(icandy.pricePerLb);
+            setLt(owp * icandy.pricePerLb)
+        }
     }, [icandy])
 
     return (
@@ -68,8 +102,8 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) =
                         <label htmlFor="updateOrderDetailById" className="label py-1">
                             <span className="label-text font-semibold text-xs">Order Detail to Update</span>
                         </label>
-                        <select name="updateOrderDetailById" id="updateOrderDetailById" className="select select-bordered select-primary select-sm w-full" onChange={e => {console.log(e.target.value); setUpdatedOrderDetail(JSON.parse(e.target.value))}}>
-                            <option selected disabled hidden value={null}>Select an Order Detail</option>
+                        <select name="updateOrderDetailById" id="updateOrderDetailById" className="select select-bordered select-primary select-sm w-full" defaultValue="" onChange={e => {console.log(e.target.value); setUpdatedOrderDetail(JSON.parse(e.target.value))}}>
+                            <option  disabled hidden value="">Select an Order Detail</option>
                             {orderDetails.map((detail) => (
                                 <option key={detail.orderDetailsId} value={JSON.stringify(detail)}>
                                     {detail.orderDetailsId}
@@ -83,7 +117,7 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) =
                             <span className="label-text font-semibold text-xs">Change Order (NOT RECOMMENDED)</span>
                         </label>
                         <select name="updateOrderById" id="updateOrderById" className="select select-bordered select-primary select-sm w-full" value={JSON.stringify(order)} onChange={e => {setOrder(JSON.parse(e.target.value))}}>
-                            <option selected value={order}>Select an Order</option>
+                            <option value={JSON.stringify(null)}>Select an Order</option>
                             {orders.map((order) => (
                                 <option key={order.orderId} value={JSON.stringify(order)}>
                                     {order.orderId}
@@ -97,7 +131,7 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) =
                             <span className="label-text font-semibold text-xs">Change Candy</span>
                         </label>
                         <select name="updateCandyById" id="updateCandyById" className="select select-bordered select-primary select-sm w-full" value={JSON.stringify(icandy)} onChange={e => {setiCandy(JSON.parse(e.target.value))}}>
-                            <option selected value={icandy}>Select a Candy</option>
+                            <option value={JSON.stringify(null)}>Select a Candy</option>
                             {candies.map((candy) => (
                                 <option key={candy.candyId} value={JSON.stringify(candy)}>
                                     {candy.candyId} - {candy.candyName}
@@ -133,7 +167,7 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) =
                             id="unitPricePerLb"
                             readOnly
                             className="input input-bordered input-sm w-full bg-base-200 text-base-content/70 cursor-not-allowed"
-                            value={upp}
+                            value={upp ?? 0}
                             onChange={e => {setUpp(e.target.value)}}
                         />
                     </div>
@@ -148,12 +182,12 @@ const UpdateOrderDetailsForm = ({ backendURL, candies, orderDetails, orders }) =
                             id="lineTotal"
                             readOnly
                             className="input input-bordered input-sm w-full bg-base-200 text-base-content/70 cursor-not-allowed"
-                            value={lt}
+                            value={lt ?? 0}
                         />
                     </div>
 
                     <div className="flex-shrink-0 lg:mb-0.5">
-                        <button type="submit" className="btn btn-primary btn-sm px-6 w-full lg:w-auto">Update</button>
+                        <button type="submit" className="btn btn-primary btn-sm px-6 w-full lg:w-auto" onClick={e => {submitUpdate()}}>Update</button>
                     </div>
                 </form>
             </div>

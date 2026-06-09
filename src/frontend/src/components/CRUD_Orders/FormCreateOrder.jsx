@@ -68,8 +68,8 @@ const CreateOrderForm = ({ vendors, candies, backendURL, orders}) => {
                         <label htmlFor="assingVendorId" className="label py-1">
                             <span className="label-text font-semibold text-xs">Vendor</span>
                         </label>
-                        <select name="assingVendorId" id="assingVendorId" defaultValue="-- Please choose a vendor --" required className="select select-bordered select-primary select-sm w-full" onChange={e => {setnOVendor(e.target.value)}}>
-                            <option disabled hidden value={null}>-- Please choose a vendor --</option>
+                        <select name="assingVendorId" id="assingVendorId" defaultValue="" required className="select select-bordered select-primary select-sm w-full" onChange={e => {setnOVendor(e.target.value)}}>
+                            <option disabled hidden value="">-- Please choose a vendor --</option>
                             {vendors.map((vendor) => (
                                 <option key={vendor.vendorId} value={vendor.vendorId}>
                                     {vendor.vendorId} - {vendor.vendorName}

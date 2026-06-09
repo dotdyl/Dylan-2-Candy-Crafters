@@ -32,7 +32,7 @@ function Candies({ backendURL }) {
 
     const onDelete = async (id) => {
       try {
-        const response = await fetch(backendURL + `/candies-delete/${id}`, {method: 'DELETE'});
+        const response = await fetch(backendURL + `/candies/${id}`, {method: 'DELETE'});
         if (response.status == 200) {
           setCandies(candies.filter(e => {
             return e.candyId !== id;}));

@@ -7,6 +7,34 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
     const [lastStocked, setLastStocked] = useState()
     const [gallonsFilled, setGallonsFilled] = useState(0.0)
 
+    const submitUpdate = async () => {
+        try {
+            console.log("bleh")
+            const body = {
+                    "inventoryOd": updateInventory.inventoryId,
+                    "candyId": icandy.candyId,
+                    "gallonsFilled": gallonsFilled,
+                    "lastStocked": lastStocked
+                }
+            console.log(body)
+            const response = await fetch( backendURL + "/inventory", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+            if (response.status == 200) {
+                console.log("yay!")
+            } else {
+                const text = await response.json()
+                alert(text)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const autofill = () => {
 
         if (Object.keys(updateInventory).length !== 0){
@@ -49,7 +77,7 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
                             <span className="label-text font-semibold text-xs">Inventory Space to Update</span>
                         </label>
                         <select name="updateInventoryById" id="updateInventoryById" className="select select-bordered select-primary select-sm w-full" defaultValue="" onChange={e => {setUpdatedInventory(JSON.parse(e.target.value))}}>
-                            <option value="">Select an Inventory Space</option>
+                            <option value="" disabled hidden>Select an Inventory Space</option>
                             {inventorySpaces.map((space) => (
                                 <option key={space.inventoryId} value={JSON.stringify(space)}>
                                     {space.inventoryId}
@@ -101,7 +129,7 @@ const UpdateInventorySpaceForm = ({ backendURL, candies, inventorySpaces }) => {
                     </div>
 
                     <div className="flex-shrink-0 lg:mb-0.5">
-                        <button type="submit" className="btn btn-primary btn-sm px-6 w-full lg:w-auto">Update</button>
+                        <button type="submit" className="btn btn-primary btn-sm px-6 w-full lg:w-auto" onClick={e => {submitUpdate()}}>Update</button>
                     </div>
                 </form>
             </div>

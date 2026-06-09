@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"; // Importing useState for managing state in the component
 import TableRow from "../components/TableRow";
 import CreateOrderForm from "../components/CRUD_Orders/FormCreateOrder";
+import UpdateOrderDetailForm from "../components/CRUD_Orders/FormUpdateOrderDetail"
 
 function Orders({ backendURL }) {
 
@@ -27,6 +28,20 @@ function Orders({ backendURL }) {
             console.log(error);
         }
     };
+
+    const onDeleteOrderDetail = async (id) => {
+      try {
+        const response = await fetch(backendURL + `/orderDetails/${id}`, {method: 'DELETE'});
+        if (response.status == 200) {
+            getData();
+        } else {
+            const text = await response.json()
+            alert(text)
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
     // Load table on page load
     useEffect(() => {
@@ -56,10 +71,7 @@ function Orders({ backendURL }) {
                             {orders.map((order, index) => (
                                 <TableRow
                                     key={index}
-                                    rowObject={{
-                                        ...order,
-                                        vendorId: `${order.vendorId} - ${vendors.find(v => v.vendorId === order.vendorId)?.vendorName || 'Unknown'}`
-                                    }}
+                                    rowObject={order}
                                     backendURL={backendURL}
                                     refreshOrders={getData}
                                 />
@@ -94,13 +106,14 @@ function Orders({ backendURL }) {
                                     }}
                                     backendURL={backendURL}
                                     refreshOrders={getData}
+                                    onDelete={onDeleteOrderDetail}
                                 />
                             ))}
                         </tbody>
                     </table>
                 </div>
             </div>
-            <CreateOrderForm vendors={vendors} candies={candies} orders={orders}></CreateOrderForm>
+            <CreateOrderForm backendURL={backendURL} vendors={vendors} candies={candies} orders={orders}></CreateOrderForm>
             {/*Not necessary, probably, but the form was made: <UpdateOrderForm vendors={vendors} candies={candies} orders={orders} orderDetails={orderDetails}></UpdateOrderForm>*/
             /*
               <div className="mt-4 mb-2 ml-1">
@@ -109,6 +122,7 @@ function Orders({ backendURL }) {
             <CreateOrderDetailForm candies={candies} orders={orders}></CreateOrderDetailForm>
             <UpdateOrderDetailForm candies={candies} orderDetails={orderDetails} orders={orders} />
             */}
+            <UpdateOrderDetailForm backendURL={backendURL} candies={candies} orderDetails={orderDetails} orders={orders} getData={getData}/>
         </>
     );
 }
