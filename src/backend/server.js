@@ -77,6 +77,9 @@ app.delete('/orderDetails/:id', async (req, res) => {
     catch (error) {
         console.error("Error executing queries:", error);
         res.status(500).send("An error occurred while executing the database queries.");
+    }
+})
+
 //POST route for sending a new candy to DB.
 app.post('/candies', async (req, res) => {
     try{
