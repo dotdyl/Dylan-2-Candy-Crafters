@@ -83,20 +83,9 @@ function Orders({ backendURL }) {
                 </div>
             </div>
 
-            <h1 className='text-xl font-bold text-base-content'>View Order Details for an Order</h1>
-            <div className="form-control w-full max-w-[250px]">
-                <select name="viewOrderDetailsByOrder" id="viewOrderDetailsByOrder" className="select select-bordered select-primary select-sm w-full" defaultValue="" onChange={e => {console.log(e.target.value); setOrderDetailsToView(JSON.parse(e.target.value))}}>
-                    <option  disabled hidden value="">Select an Order</option>
-                    {orders.map((order) => (
-                        <option key={order.orderId} value={JSON.stringify(order.orderId)}>
-                            {order.orderId}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
-            {orderDetailsToView != 0 && <div className='card bg-base-100 max-w-full border border-base-300 shadow-md mb-6'>
+           <div className='card bg-base-100 max-w-full border border-base-300 shadow-md mb-6'>
                 <div className='card-body'>
+                    <h1 className='text-xl font-bold text-base-content'>All Order Details</h1>
                     <table className='table table-zebra'>
                         <thead className='text-base text-primary'>
                             <tr>
@@ -110,7 +99,7 @@ function Orders({ backendURL }) {
 
                         <tbody>
                             {/*Use '...' to SPREAD the detail OBJ across its pieces/subfields, one of these is candyID, we now can change it dynamically.*/}
-                            {(orderDetails.filter((detail) => (detail.orderId === orderDetailsToView)).map((detail, index) => (
+                            {(orderDetails.map((detail, index) => (
                                 <TableRow
                                     key={index}
                                     rowObject={{
@@ -125,7 +114,7 @@ function Orders({ backendURL }) {
                         </tbody>
                     </table>
                 </div>
-            </div>}
+            </div>
             <CreateOrderForm backendURL={backendURL} vendors={vendors} candies={candies} orders={orders}></CreateOrderForm>
             {/*Not necessary, probably, but the form was made: <UpdateOrderForm vendors={vendors} candies={candies} orders={orders} orderDetails={orderDetails}></UpdateOrderForm>*/
             /*
